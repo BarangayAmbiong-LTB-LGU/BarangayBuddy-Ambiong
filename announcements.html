@@ -93,17 +93,24 @@
 
       <!-- Main -->
       <main class="main-container">
-        <div class="main-title">
-          <p class="font-weight-bold">Publish an Announcement</p>
-        </div>
-
         <div class="main-cards">
-
           <div class="card">
             <div class="card-inner">
-             
+              <form id="announcementForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" required>
+        
+                <label for="description">Description:</label>
+                <textarea id="description" required></textarea>
+        
+                <label for="image">Image:</label>
+                <input type="file" id="image" accept="image/*" required>
+        
+                <button type="submit">Publish Announcement</button>
+              </form>
             </div>
           </div>
+        </div>
 
       </main>
       
@@ -115,5 +122,6 @@
     <!-- Scripts -->
     <!-- Custom JS -->
     <script src="js/script.js"></script>
+    <script type="module" src="js/announcements.js"></script>
   </body>
 </html>
