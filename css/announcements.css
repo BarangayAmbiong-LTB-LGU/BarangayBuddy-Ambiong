@@ -140,8 +140,6 @@ body {
   /* ---------- MAIN ---------- */
   
   .main-container {
-    grid-area: main;
-    overflow-y: auto;
     padding: 20px 20px;
   }
   
@@ -155,16 +153,17 @@ body {
   }
   
   .main-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px;
-    margin: 20px 0;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    margin: auto;
+    width: 200%;
+    padding: 10px;
+    grid-area: auto;
   }
   
   .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
     padding: 25px;
     background-color: #ffffff;
     box-sizing: border-box;
@@ -172,28 +171,8 @@ body {
     border-radius: 5px;
     box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
   }
-  
-  .card:hover{
-    background-color: #9799ab;
-  }
-  
+   
   .card:first-child {
-    border-left: 7px solid #960019;
-  }
-  
-  .card:nth-child(2) {
-    border-left: 7px solid #960019;
-  }
-  
-  .card:nth-child(3) {
-    border-left: 7px solid #960019;
-  }
-  
-  .card:nth-child(4) {
-    border-left: 7px solid #960019;
-  }
-  
-  .card:nth-child(5) {
     border-left: 7px solid #960019;
   }
   
@@ -220,23 +199,83 @@ body {
   .card-inner > span {
     font-size: 35px;
   }
-  
-  .side-container {
-    grid-area: main;
-    overflow-y: auto;
-    padding: 20px 20px;
+
+  .form > .title {
+    font-weight: bold;
+  }
+
+  .form > .description {
+    font-weight: bold;
+  }
+
+  .form > .image {
+    font-weight: bold;
+  }
+
+  input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: large;
+  }
+
+  .file-input-container {
+    position: relative;
+    display: inline-block;
   }
   
-  .side-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 25px;
-    background-color: #ffffff;
-    box-sizing: border-box;
-    border: 1px solid #d2d2d3;
+  input[type="file"] {
+    display: none;
+  }
+  
+  .custom-file-input {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #666666;
+    color: #fff;
+    cursor: pointer;
+    border: none;
     border-radius: 5px;
-    box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .custom-file-input:hover {
+    background-color: #960019;
+  }
+
+  textarea {
+  resize: none;
+  width: 100%;
+  height: 300px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: large;
+  }
+
+  .submit {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #960019;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit:hover {
+    background-color: #21232d;
   }
   
   /* ---------- SCROLLBARS ---------- */
