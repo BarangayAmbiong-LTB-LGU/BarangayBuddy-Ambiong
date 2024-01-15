@@ -32,15 +32,18 @@ function displaySuggestions() {
         snapshot.forEach((childSnapshot) => {
             const suggestion = childSnapshot.val();
             const suggestionHtml = `
-    <div class="card">
-        <div class="card-inner">
-            <a >
-                <div class="text-primary"><strong>From: ${suggestion.sugName}</strong></div>
-                <br> 
-                <div>${suggestion.suggest}</div>
+    
+<div class="main-card">
+<div class="card">
+    <div class="card-inner">
+        <a>
+        <div class="text-primary"><strong>From: ${suggestion.sugName}</strong></div>
+        <br> 
+            <div>${suggestion.suggest}</div>
             </a>
-        </div>
     </div>
+    </div>
+</div>
 `;
             suggestionsContainer.innerHTML += suggestionHtml;
         });
