@@ -67,6 +67,10 @@ body {
   .header-left > a {
     text-decoration: none;
   }
+
+  .logout {
+    color: #960019;
+  }
   
   
   /* ---------- SIDEBAR ---------- */

@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/announcements.css">
+    <link rel="stylesheet" href="css/announcements_history.css">
   </head>
   <body>
     <div class="grid-container">
@@ -30,6 +30,7 @@
         <div class="header-right">
           <span class="material-icons-outlined">notifications</span>
           <span class="material-icons-outlined">account_circle</span>
+          <a href="login.html" class="logout"><span class="material-icons-outlined">logout</span></a>
         </div>
       </header>
       <!-- End Header -->
@@ -72,7 +73,7 @@
           </li>
 
           <li class="sidebar-list-item">
-            <a href="announcements.html">
+            <a href="announcements_history.html">
               <span class="material-icons-outlined">campaign</span> Publish Announcments
             </a>
           </li>
@@ -90,34 +91,24 @@
       <!-- Main -->
       <main class="main-container">
         <div class="main-title">
-          <p class="font-weight-bold">Publish Announcement</p>
+          <p class="font-weight-bold">Announcement</p>
         </div>
 
-        <div class="main-cards">
-          <div class="card">
-              <div class="announcement-form">
-              <form id="announcementForm" class="form">
-
-                <label for="title" class="title">Title:</label>
-                <input type="text" id="title" required>
-        
-                <label for="description" class="description">Description:</label>
-                <textarea id="description" required></textarea>
-        
-                <label for="image" class="image">Image:</label>
-                <div class="file-input-container">
-                  <input type="file" id="image" accept="image/*" required>
-                  <label for="image" class="custom-file-input">Browse</label>
-                </div>
-        
-                <br>
-                <br>
-                <button type="submit" class="submit">Publish Announcement</button>
-                
-                </form>
-              
-            </div>
+          <div class="button-container">
+            <button class="publish-btn"><a href="announcements_publish.html">Publish New Announcement</a></button>
           </div>
+
+        <h3>History: </h3>
+        <div class="main-cards">
+
+          <a href="#">
+            <div class="card">
+              <div class="card-inner">
+                <p class="text-primary">History BLAH BLAH BLAH</p> 
+              </div>
+            </div>
+          </a>
+
         </div>
 
       </main>
