@@ -20,29 +20,29 @@
     <div class="body">
     <div class="wrapper">
 
-        <form action="">
+        <form id="loginForm" action="">
             <h1>Welcome Admin!</h1>
-
+        
             <div class="input-box">
-                <input type="text" placeholder="Email Address" required>
+                <input type="text" name="email" placeholder="Email Address" required>
                 <i class='bx bx-user'></i>
             </div>
-
+        
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
-
+        
             <div class="remember-forgot">
                 <label><input type="checkbox">Remember Me</label>
                 <a href="#">Forgot Password?</a>
             </div>
-
-            <a href="index.html"><button type="submit" class="btn">Login</button></a>
+        
+            <button type="submit" class="btn">Login</button>
         </form>
     </div>
     </div>
 
-
+    <script defer type="module" src="js/login.js"></script>
 </body>
 </html>
