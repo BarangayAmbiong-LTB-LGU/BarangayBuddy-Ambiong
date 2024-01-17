@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import { getDatabase, ref, get, query, orderByChild, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,60 +20,73 @@ const database = getDatabase(app);
 
 // Function to display announcements
 function displayAnnouncements(announcements) {
-    const mainCards = document.querySelector('.main-cards');
-  
-    // Clear previous announcements
-    mainCards.innerHTML = '';
-  
-    // Loop through each announcement and display it
-    announcements.forEach((announcement) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-  
-      // Display title
-      const title = document.createElement('p');
-      title.className = 'text-primary';
-      title.textContent = announcement.title;
-      card.appendChild(title);
-  
-      // Display image
-      const image = document.createElement('img');
-      image.src = announcement.imageUrl;
-      image.alt = 'Announcement Image';
-      image.className = 'announcement-image'; 
-      card.appendChild(image);
-  
-      // Display description
-      const description = document.createElement('p');
-      description.textContent = announcement.description;
-      card.appendChild(description);
-  
-      // Display timestamp (you may want to format it to a more readable format)
-      const timestamp = document.createElement('p');
-      timestamp.textContent = `Published on: ${new Date(announcement.timestamp).toLocaleString()}`;
-      card.appendChild(timestamp);
-  
-      // Append the card to the main container
-      mainCards.appendChild(card);
-    });
-  }
+  const mainCards = document.querySelector('.main-cards');
 
-// Function to fetch announcements from the database
-async function getAnnouncements() {
-  const announcementsRef = ref(database, 'announcements');
-  const snapshot = await get(announcementsRef);
+  // Clear previous announcements
+  mainCards.innerHTML = '';
 
-  if (snapshot.exists()) {
-    const announcements = Object.values(snapshot.val());
-    displayAnnouncements(announcements);
-  } else {
-    console.log('No announcements found');
-  }
+  // Loop through each announcement and display it
+  announcements.forEach((announcement) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    // Display title
+    const title = document.createElement('h1');
+    title.className = 'text-primary';
+    title.textContent = announcement.title;
+    // Make the title bold
+    title.style.fontWeight = 'bold';
+    card.appendChild(title);
+
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'image-container';
+
+    const image = document.createElement('img');
+    image.src = announcement.imageUrl;
+    image.alt = 'Announcement Image';
+    image.className = 'announcement-image';
+    imageContainer.appendChild(image);
+
+    card.appendChild(imageContainer);
+
+    // Display description
+    const description = document.createElement('h4');
+    description.textContent = announcement.description;
+    card.appendChild(description);
+
+    // Add two line breaks for extra space
+    const lineBreak1 = document.createElement('br');
+    const lineBreak2 = document.createElement('br');
+    card.appendChild(lineBreak1);
+    card.appendChild(lineBreak2);
+
+    // Display timestamp
+    const timestamp = document.createElement('p');
+    timestamp.className = 'timestamp';
+    timestamp.textContent = `Published on: ${new Date(announcement.timestamp).toLocaleString()}`;
+    card.appendChild(timestamp);
+
+    // Append the card to the main container
+    mainCards.appendChild(card);
+  });
 }
 
+// Function to fetch announcements from the database and listen for real-time updates
+function listenForAnnouncements() {
+  const announcementsRef = ref(database, 'announcements');
+  const orderedAnnouncements = query(announcementsRef, orderByChild('timestamp'));
 
-// Assuming each card has an image with the class 'announcement-image'
-
+  // Listen for changes in the data
+  onValue(orderedAnnouncements, (snapshot) => {
+    if (snapshot.exists()) {
+      const announcements = Object.values(snapshot.val());
+      // Reverse the order of announcements to display newest first
+      displayAnnouncements(announcements.reverse());
+    } else {
+      console.log('No announcements found');
+    }
+  });
+}
 
 // Fetch and display announcements on page load
-getAnnouncements();
+listenForAnnouncements();

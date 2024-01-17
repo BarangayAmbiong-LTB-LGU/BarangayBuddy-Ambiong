@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyCGeVx4ZmZPMXjeBR71lHbxVy8i-4gD9uQ",
   authDomain: "barangaybuddy.firebaseapp.com",
@@ -11,7 +10,6 @@ const firebaseConfig = {
   messagingSenderId: "107104492368",
   appId: "1:107104492368:web:8896aec25ca1838cefaa55"
 };
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -28,23 +26,26 @@ function displaySuggestions() {
         // Clear existing suggestions
         suggestionsContainer.innerHTML = '';
 
-        // Iterate through the suggestions and display them
-        snapshot.forEach((childSnapshot) => {
-            const suggestion = childSnapshot.val();
+        // Convert the snapshot to an array and reverse it
+        const reversedSuggestions = Object.values(snapshot.val()).reverse();
+
+        // Iterate through the reversed suggestions and display them
+        reversedSuggestions.forEach((suggestion) => {
+            const timestamp = suggestion.timestamp ? new Date(suggestion.timestamp).toLocaleString() : '';
             const suggestionHtml = `
-    
-<div class="main-card">
-<div class="card">
-    <div class="card-inner">
-        <a>
-        <div class="text-primary"><strong>From: ${suggestion.sugName}</strong></div>
-        <br> 
-            <div>${suggestion.suggest}</div>
-            </a>
-    </div>
-    </div>
-</div>
-`;
+                <div class="main-card">
+                    <div class="card">
+                        <div class="card-inner">
+                            <a>
+                                <div class="text-primary"><strong>From: ${suggestion.sugName}</strong></div>
+                                <div><small>Added on: ${timestamp}</small></div>
+                                <br> 
+                                <div>${suggestion.suggest}</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
             suggestionsContainer.innerHTML += suggestionHtml;
         });
     });
