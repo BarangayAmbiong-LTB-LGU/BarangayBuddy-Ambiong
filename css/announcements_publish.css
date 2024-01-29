@@ -156,13 +156,11 @@ body {
   }
   
   .main-cards {
-    text-align: center;
-    align-items: center;
-    display: flex;
-    margin: auto;
-    width: 200%;
-    padding: 30px;
-    grid-area: auto;
+    display: grid;
+    grid-template-columns: 1620px;
+    gap: 20px;
+    margin: 20px 0;
+    max-width: 100%;
   }
   
   .card {
