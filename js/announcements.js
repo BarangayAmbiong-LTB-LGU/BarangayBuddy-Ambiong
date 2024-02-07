@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+/*   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
   getStorage,
   ref as storageRef,
@@ -10,7 +10,7 @@ import {
   ref as databaseRef,
   push,
   set,
-  serverTimestamp  // Import serverTimestamp here
+  serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {

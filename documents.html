@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Documents</title>
@@ -13,224 +13,181 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/documents.css">
-  </head>
-  <body>
-    <div class="grid-container">
+</head>
+<body>
+<div class="grid-container">
+  
 
-      <!-- Header -->
-      <header class="header">
-        <div class="menu-icon" onclick="openSidebar()">
-          <span class="material-icons-outlined">menu</span>
-        </div>
-        <div class="header-left">
-          <a href="officials.html">
-            <p class="text-primary">Officials</p>
-          </a>
-        </div>
-        <div class="header-right">
-          <span class="material-icons-outlined">notifications</span>
-          <span class="material-icons-outlined">account_circle</span>
-          <a href="login.html" class="logout"><span class="material-icons-outlined">logout</span></a>
-        </div>
-      </header>
-      <!-- End Header -->
+ <!-- Header -->
+ <header class="header">
+    <div class="menu-icon" onclick="openSidebar()">
+      <span class="material-icons-outlined">menu</span>
+    </div>
+    <div class="header-left">
+      <a href="officials.html">
+        <p class="text-primary">Officials</p>
+      </a>
+    </div>
+    <div class="header-right">
+      <span class="material-icons-outlined">notifications</span>
+      <span class="material-icons-outlined">account_circle</span>
+      <a href="login.html" class="logout"><span class="material-icons-outlined">logout</span></a>
+    </div>
+  </header>
+  <!-- End Header -->
 
-      <!-- Sidebar -->
-      <aside id="sidebar">
-        <div class="sidebar-title">
-          <div class="sidebar-brand" >
-            <a href="index.html">
-            <span class="material-icons-outlined" >location_city</span>  Barangay Buddy
-            </a>
-          </div>
-          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
-        </div>
-    
-        <ul class="sidebar-list">
-            
-          <a href="index.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">dashboard</span> Dashboard
-            </li>
-          </a>
-          
-          <a href="documents.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">description</span> Requested Barangay Documents
-            </li>
-          </a>
-
-          <a href="suggestions.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">people</span> Suggestions
-            </li>
-          </a>
-
-          <a href="announcements_history.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">campaign</span> Publish Announcments
-            </li>
-          </a>
-
-          <a href="settings.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">settings</span> Settings
-            </li>
-          </a>
-
-        </ul>
-        
-      </aside>
-      <!-- End Sidebar -->
-
-      <!-- Main -->
-      <main class="main-container">
-        <div class="main-title">
-          <p class="font-weight-bold">Manage Documents</p>
-        </div>
-
-        <div class="dropdown">
-          <button class="dropbtn">Filter Documents</button>
-          <div class="dropdown-content">
-            <a href="#">Barangay Clearance</a>
-            <a href="#">Business Clearance</a>
-            <a href="#">Residency</a>
-            <a href="#">Indigency</a>
-            <a href="#">Others</a>
-          </div>
-        </div> 
-
-        <div class="main-cards">
-
-          <div class="card">
-            <div class="main-title">
-              <p class="font-weight-bold">Barangay Clearance</p>
-            </div>
-              <table id="residents">
-                <tr>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Gender</th>
-                  <th>Address</th>
-                  <th>Purpose</th>
-                  <th>Progress</th>
-                </tr>
-                <tr>
-                  <td>Chan</td>
-                  <td>21</td>
-                  <td>Male</td>
-                  <td>Baguio City</td>
-                  <td>Postal</td>
-                  <td>Working on it</td>
-                </tr>
-              </table> 
-            </div>
-
-            <div class="card">
-              <div class="main-title">
-                <p class="font-weight-bold">Business Clearance</p>
-              </div>
-                <table id="residents">
-                  <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Gender</th>
-                    <th>Address</th>
-                    <th>Purpose</th>
-                    <th>Progress</th>
-                  </tr>
-                  <tr>
-                    <td>Chan</td>
-                    <td>21</td>
-                    <td>Male</td>
-                    <td>Baguio City</td>
-                    <td>Postal</td>
-                    <td>Working on it</td>
-                  </tr>
-                </table> 
-              </div>
-
-              <div class="card">
-                <div class="main-title">
-                  <p class="font-weight-bold">Residency</p>
-                </div>
-                  <table id="residents">
-                    <tr>
-                      <th>Name</th>
-                      <th>Age</th>
-                      <th>Gender</th>
-                      <th>Address</th>
-                      <th>Purpose</th>
-                      <th>Progress</th>
-                    </tr>
-                    <tr>
-                      <td>Chan</td>
-                      <td>21</td>
-                      <td>Male</td>
-                      <td>Baguio City</td>
-                      <td>Postal</td>
-                      <td>Working on it</td>
-                    </tr>
-                  </table> 
-                </div>
-
-                <div class="card">
-                  <div class="main-title">
-                    <p class="font-weight-bold">Indigency</p>
-                  </div>
-                    <table id="residents">
-                      <tr>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>Purpose</th>
-                        <th>Progress</th>
-                      </tr>
-                      <tr>
-                        <td>Chan</td>
-                        <td>21</td>
-                        <td>Male</td>
-                        <td>Baguio City</td>
-                        <td>Postal</td>
-                        <td>Working on it</td>
-                      </tr>
-                    </table> 
-                  </div>
-
-                  <div class="card">
-                    <div class="main-title">
-                      <p class="font-weight-bold">Others</p>
-                    </div>
-                      <table id="residents">
-                        <tr>
-                          <th>Name</th>
-                          <th>Age</th>
-                          <th>Gender</th>
-                          <th>Address</th>
-                          <th>Purpose</th>
-                          <th>Progress</th>
-                        </tr>
-                        <tr>
-                          <td>Chan</td>
-                          <td>21</td>
-                          <td>Male</td>
-                          <td>Baguio City</td>
-                          <td>Postal</td>
-                          <td>Working on it</td>
-                        </tr>
-                      </table> 
-                    </div>
-                    
-          </div>
-        </div>
-      </main>
-      
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-title">
+      <div class="sidebar-brand">
+        <a href="index.html">
+          <span class="material-icons-outlined">location_city</span> Barangay Buddy
+        </a>
+      </div>
+      <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
     </div>
 
-    <!-- Scripts -->
-    <!-- Custom JS -->
-    <script src="js/script.js"></script>
-    <script type="module" src="js/documents.js"></script>
-  </body>
+    <ul class="sidebar-list">
+      <a href="index.html">
+        <li class="sidebar-list-item">
+          <span class="material-icons-outlined">dashboard</span> Dashboard
+        </li>
+      </a>
+      <a href="documents.html">
+        <li class="sidebar-list-item">
+          <span class="material-icons-outlined">description</span> Requested Barangay Documents
+        </li>
+      </a>
+      <a href="suggestions.html">
+        <li class="sidebar-list-item">
+          <span class="material-icons-outlined">people</span> Suggestions
+        </li>
+      </a>
+      <a href="announcements_history.html">
+        <li class="sidebar-list-item">
+          <span class="material-icons-outlined">campaign</span> Publish Announcements
+        </li>
+      </a>
+      <a href="settings.html">
+        <li class="sidebar-list-item">
+          <span class="material-icons-outlined">settings</span> Settings
+        </li>
+      </a>
+    </ul>
+  </aside>
+  <!-- End Sidebar -->
+
+  <!-- Main -->
+  <main class="main-container">
+    <div class="main-title">
+      <p class="font-weight-bold">Manage Documents</p>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">Filter Documents</button>
+      <div class="dropdown-content">
+        <a href="#">Barangay Clearance</a>
+        <a href="#">Business Clearance</a>
+        <a href="#">Residency</a>
+        <a href="#">Indigency</a>
+        <a href="#">Others</a>
+      </div>
+    </div>
+
+    <div class="main-cards">
+      <div class="card" id="barangayClearanceCard">
+        <div class="main-title">
+          <p class="font-weight-bold">Barangay Clearance</p>
+        </div>
+        <div class="card-content">
+          <table id="residentsBarangayClearance">
+            <thead>
+              <tr>
+                <th>Resident Name</th>
+                <th>Age</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Purpose</th>
+                <th>Date & Time of Request</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" id="businessClearanceCard">
+        <div class="main-title">
+          <p class="font-weight-bold">Business Clearance</p>
+        </div>
+        <div class="card-content">
+          <table id="residentsBusinessClearance">
+            <thead>
+              <tr>
+                <th>Name Of Business</th>
+                <th>Name Of Owner</th>
+                <th>Address of Business</th>
+                <th>Purpose</th>
+                <th>Date & Time of Request</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" id="ResidencyCard">
+        <div class="main-title">
+          <p class="font-weight-bold">Residency</p>
+        </div>
+        <div class="card-content">
+          <table id="residentsResidency">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+                <th>Civil Status</th>
+                <th>Address</th>
+                <th>Duration</th>
+                <th>Date & Time of Request</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" id="othersCard">
+        <div class="main-title">
+          <p class="font-weight-bold">Others</p>
+        </div>
+        <div class="card-content">
+          <table id="residentsOthers">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Purpose</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/script.js"></script>
+<script type="module" src="js/documents.js"></script>
+</body>
 </html>
