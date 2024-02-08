@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Suggestions</title>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/suggestions.css">
+  </head>
+  <body>
+    <div class="grid-container">
+
+      <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+          <a href="officials.html">
+            <p class="text-primary">Officials</p>
+          </a>
+        </div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">account_circle</span>
+          <a href="login.html" class="logout"><span class="material-icons-outlined">logout</span></a>
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Sidebar -->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand" >
+            <a href="index.html">
+            <span class="material-icons-outlined" >location_city</span>  Barangay Buddy
+            </a>
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+
+        <ul class="sidebar-list">
+            
+          <a href="index.html">
+            <li class="sidebar-list-item">
+              <span class="material-icons-outlined">dashboard</span> Dashboard
+            </li>
+          </a>
+          
+          <a href="documents.html">
+            <li class="sidebar-list-item">
+              <span class="material-icons-outlined">description</span> Requested Barangay Documents
+            </li>
+          </a>
+
+          <a href="reports_dashboard.html">
+            <li class="sidebar-list-item">
+              <span class="material-icons-outlined">poll</span> Manage Reports
+            </li>
+          </a>
+
+          <a href="suggestions.html">
+            <li class="sidebar-list-item">
+              <span class="material-icons-outlined">people</span> Suggestions
+            </li>
+          </a>
+
+          <a href="announcements_history.html">
+            <li class="sidebar-list-item">
+              <span class="material-icons-outlined">campaign</span> Publish Announcments
+            </li>
+          </a>
+
+          <a href="settings.html">
+            <li class="sidebar-list-item">
+              <span class="material-icons-outlined">settings</span> Settings
+            </li>
+          </a>
+
+        </ul>
+        
+      </aside>
+      <!-- End Sidebar -->
+
+      <!-- Main -->
+      <main class="main-container">
+        <div class="main-title">
+          <p class="font-weight-bold">Suggestions</p>
+        </div>
+
+        <div class="dropdown">
+          <button class="dropbtn">Filter Suggestions</button>
+          <div class="dropdown-content">
+            <a href="#">Health</a>
+            <a href="#">Education</a>
+            <a href="#">Sports</a>
+            <a href="#">Barangay Improvements</a>
+            <a href="#">Others</a>
+          </div>
+        </div> 
+
+        <div class="main-cards">
+          
+          <div class="main-cards" id="suggestionsContainer">
+
+        </div>
+
+      </main>
+      <!-- End Main -->
+
+    </div>
+
+   
+    
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
+    <script type="module" src="js/suggestions.js"></script>
+  </body>
+  
+</html>
