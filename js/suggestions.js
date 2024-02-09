@@ -32,6 +32,12 @@ function displaySuggestions() {
         // Iterate through the reversed suggestions and display them
         reversedSuggestions.forEach((suggestion) => {
             const timestamp = suggestion.timestamp ? new Date(suggestion.timestamp).toLocaleString() : '';
+            let shortDescription = suggestion.suggest;
+            let showButton = false;
+            if (suggestion.suggest.length > 100) {
+                shortDescription = suggestion.suggest.slice(0, 100) + '...';
+                showButton = true;
+            }
             const suggestionHtml = `
                 <div class="main-card">
                     <div class="card">
@@ -40,7 +46,8 @@ function displaySuggestions() {
                                 <div class="text-primary"><strong>From: ${suggestion.sugName}</strong></div>
                                 <div><small>Added on: ${timestamp}</small></div>
                                 <br> 
-                                <div>${suggestion.suggest}</div>
+                                <div class="suggestion-description">${shortDescription}</div>
+                                ${showButton ? `<button type="submit" class="submit expand-button" data-description="${suggestion.suggest}">Read More</button>` : ''}
                             </a>
                         </div>
                     </div>
@@ -48,9 +55,24 @@ function displaySuggestions() {
             `;
             suggestionsContainer.innerHTML += suggestionHtml;
         });
+
+        // Add event listeners to expand buttons
+        const expandButtons = document.querySelectorAll('.expand-button');
+        expandButtons.forEach((button) => {
+            button.addEventListener('click', function() {
+                const description = this.dataset.description;
+                const suggestionDescription = this.parentElement.querySelector('.suggestion-description');
+                if (suggestionDescription.textContent === description) {
+                    suggestionDescription.textContent = description.slice(0, 100) + '...';
+                    this.textContent = 'Read More';
+                } else {
+                    suggestionDescription.textContent = description;
+                    this.textContent = 'Show Less';
+                }
+            });
+        });
     });
 }
-
 // Execute the displaySuggestions function when the window is loaded
 window.onload = function () {
     console.log('Window loaded');
