@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCGeVx4ZmZPMXjeBR71lHbxVy8i-4gD9uQ",
@@ -10,164 +10,106 @@ const firebaseConfig = {
   messagingSenderId: "107104492368",
   appId: "1:107104492368:web:8896aec25ca1838cefaa55"
 };
+
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-const barangayClearanceRef = ref(database, 'RequestedDocuments/Barangay Clearance');
+function updateDocumentStatus(docType, docKey, status) {
+  const documentRef = ref(database, `RequestedDocuments/${docType}/${docKey}/status`);
+  set(documentRef, status)
+    .then(() => console.log(`${docType} document status updated to: ${status}`))
+    .catch((error) => console.error("Error updating document status:", error.message));
+}
+function displayDocuments(docType, tableId) {
+  const documentsRef = ref(database, `RequestedDocuments/${docType}`);
 
-function displayBarangayClearance() {
-  onValue(barangayClearanceRef, (snapshot) => {
-    const residentsTable = document.getElementById('residentsBarangayClearance').getElementsByTagName('tbody')[0];
+  onValue(documentsRef, (snapshot) => {
+    const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
 
     // Clear existing table rows
-    residentsTable.innerHTML = '';
+    table.innerHTML = '';
 
     // Check if there is data in the snapshot
     if (snapshot.exists()) {
-      const residents = snapshot.val();
+      const documents = snapshot.val();
 
-      // Iterate through residents
-      Object.keys(residents).reverse().forEach((residentKey) => {
-        const resident = residents[residentKey];
-        console.log('Full Resident Object:', resident);
+      // Iterate through documents
+      Object.keys(documents).reverse().forEach((docKey) => {
+        const doc = documents[docKey];
 
-        // Your existing code to append cells to the table
-        const dateOfRequest = resident.time ? new Date(resident.time).toLocaleDateString() : 'Invalid Date';
-        const dateOfBirth = resident.dateOfBirth ? resident.dateOfBirth : 'Invalid Date';
+        // Append a new row to the table
+        const row = table.insertRow();
 
-        const row = residentsTable.insertRow();
-        appendCell(row, resident.fullName || 'N/A');
-        appendCell(row, resident.age || 'N/A');
-        appendCell(row, dateOfBirth);
-        appendCell(row, resident.gender || 'N/A');
-        appendCell(row, resident.presentAddress || 'N/A');
-        appendCell(row, resident.purpose || 'N/A');
-        appendCell(row, dateOfRequest);
-        appendCell(row, 'Pending');
+        // Append cells to the row based on the document type
+        if (docType === 'Barangay Clearance') {
+          appendBarangayClearanceCells(row, doc);
+        } else if (docType === 'Business Clearance') {
+          appendBusinessClearanceCells(row, doc);
+        } else if (docType === 'Residency') {
+          appendResidencyCells(row, doc);
+        } else {
+          // Handle other document types here
+        }
+
+        // Create the actions cell and append buttons
+        const actionCell = row.insertCell();
+        const actionsBar = document.createElement('div');
+        actionsBar.classList.add('actions-bar');
+        const pendingButton = createStatusButton(docType, docKey, 'Pending');
+        const workingButton = createStatusButton(docType, docKey, 'Working on it');
+        const finishedButton = createStatusButton(docType, docKey, 'Finished');
+        actionsBar.appendChild(pendingButton);
+        actionsBar.appendChild(workingButton);
+        actionsBar.appendChild(finishedButton);
+        actionCell.appendChild(actionsBar);
       });
     } else {
-      console.log('No data available');
+      console.log(`No ${docType} data available`);
     }
   }, (error) => {
-    console.error('Error fetching data:', error.message);
+    console.error(`Error fetching ${docType} data:`, error.message);
   });
 }
 
-// Business Clearance
-const businessClearanceRef = ref(database, 'RequestedDocuments/Business Clearance');
-
-function displayBusinessClearance() {
-  onValue(businessClearanceRef, (snapshot) => {
-    const businessClearanceTable = document.getElementById('residentsBusinessClearance').getElementsByTagName('tbody')[0];
-
-    // Clear existing table rows
-    businessClearanceTable.innerHTML = '';
-
-    // Check if there is data in the snapshot
-    if (snapshot.exists()) {
-      const businesses = snapshot.val();
-
-      // Iterate through businesses
-      Object.keys(businesses).reverse().forEach((businessKey) => {
-        const business = businesses[businessKey];
-
-        // Your existing code to append cells to the table
-        const dateIssued = business.time ? new Date(business.time).toLocaleDateString() : 'Invalid Date';
-
-        const row = businessClearanceTable.insertRow();
-        row.setAttribute('data-business-key', businessKey);
-        row.addEventListener('click', onBusinessRowClick);
-
-    appendCell(row, business.nameOfBussiness || 'N/A');
-    appendCell(row, business.fullname || 'N/A');
-    appendCell(row, business.businessAddress || 'N/A');
-   
-    appendCell(row, dateIssued);
-    appendCell(row, 'Pending');
-      });
-    } else {
-      console.log('No data available');
-    }
-  }, (error) => {
-    console.error('Error fetching business data:', error.message);
-  });
+function appendBarangayClearanceCells(row, doc) {
+  appendCell(row, doc.fullName || 'N/A');
+  appendCell(row, doc.age || 'N/A');
+  appendCell(row, doc.dateOfBirth || 'N/A');
+  appendCell(row, doc.gender || 'N/A');
+  appendCell(row, doc.presentAddress || 'N/A');
+  appendCell(row, doc.purpose || 'N/A');
+  appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
+  appendCell(row, doc.status || 'N/A');
 }
 
-function onBusinessRowClick(event) {
-  const businessKey = event.currentTarget.getAttribute('data-business-key');
-  console.log('Business Row clicked! Business Key:', businessKey);
-  // Implement logic to show/hide additional details or navigate to a details page.
+function appendBusinessClearanceCells(row, doc) {
+  appendCell(row, doc.nameOfBussiness || 'N/A');
+  appendCell(row, doc.fullname || 'N/A');
+  appendCell(row, doc.businessAddress || 'N/A');
+  appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
+  appendCell(row, doc.status || 'N/A');
+ 
 }
 
-// Residency
-const residencyRef = ref(database, 'RequestedDocuments/Residency');
-
-function displayResidency() {
-  onValue(residencyRef, (snapshot) => {
-    const residencyTable = document.getElementById('residentsResidency').getElementsByTagName('tbody')[0];
-
-    // Clear existing table rows
-    residencyTable.innerHTML = '';
-
-    // Check if there is data in the snapshot
-    if (snapshot.exists()) {
-      const residencies = snapshot.val();
-
-      // Iterate through residencies
-      Object.keys(residencies).reverse().forEach((residencyKey) => {
-        const residency = residencies[residencyKey];
-
-        // Your existing code to append cells to the table
-        const dateOfBirth = residency.dateOfBirth ? residency.dateOfBirth : 'Invalid Date';
-
-        const row = residencyTable.insertRow();
-        row.setAttribute('data-residency-key', residencyKey);
-        row.addEventListener('click', onResidencyRowClick);
-    
-        appendCell(row, residency.fullName || 'N/A');
-        appendCell(row, residency.age || 'N/A');
-        appendCell(row, residency.gender || 'N/A');
-        appendCell(row, residency.dateOfBirth || 'N/A');  // Corrected to use dateOfBirth for Residency
-        appendCell(row, residency.civilStatus || 'N/A');
-        appendCell(row, residency.address || 'N/A');
-        appendCell(row, residency.duration || 'N/A');
-        appendCell(row, residency.time ? new Date(residency.time).toLocaleDateString() : 'Invalid Date');
-        appendCell(row, 'Pending');
-      });
-    } else {
-      console.log('No data available');
-    }
-  }, (error) => {
-    console.error('Error fetching residency data:', error.message);
-  });
+function appendResidencyCells(row, doc) {
+  appendCell(row, doc.fullName || 'N/A');
+  appendCell(row, doc.age || 'N/A');
+  appendCell(row, doc.gender || 'N/A');
+  appendCell(row, doc.dateOfBirth || 'N/A');
+  appendCell(row, doc.civilStatus || 'N/A');
+  appendCell(row, doc.address || 'N/A');
+  appendCell(row, doc.duration || 'N/A');
+  appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
+  appendCell(row, doc.status || 'N/A');
 }
-
-function onResidencyRowClick(event) {
-  const residencyKey = event.currentTarget.getAttribute('data-residency-key');
-  console.log('Residency Row clicked! Residency Key:', residencyKey);
-  // Implement logic to show/hide additional details or navigate to a details page.
+function createStatusButton(docType, docKey, status) {
+  const button = document.createElement('button');
+  button.textContent = status;
+  button.classList.add('publish-btn');
+  button.addEventListener('click', () => updateDocumentStatus(docType, docKey, status));
+  return button;
 }
-
-// Execute the display functions when the window is loaded
-window.onload = function () {
-  console.log('Window loaded');
-  displayBarangayClearance();
-  displayBusinessClearance();
-  displayResidency();
-};
-// Execute the display functions when the window is loaded
-window.onload = function () {
-  console.log('Window loaded');
-  displayBarangayClearance();
-  displayBusinessClearance();
-  displayResidency();
-};
-
-// Execute the displayBarangayClearance function when the window is loaded
-window.onload = function () {
-  console.log('Window loaded');
-  displayBarangayClearance();
-};
 
 function appendCell(row, text) {
   const cell = row.insertCell();
@@ -175,10 +117,11 @@ function appendCell(row, text) {
   cell.appendChild(textNode);
 }
 
+
 // Execute the display functions when the window is loaded
 window.onload = function () {
   console.log('Window loaded');
-  displayBarangayClearance();
-  displayBusinessClearance();
-  displayResidency();
+  displayDocuments('Barangay Clearance', 'residentsBarangayClearance');
+  displayDocuments('Business Clearance', 'residentsBusinessClearance');
+  displayDocuments('Residency', 'residentsResidency');
 };
