@@ -150,7 +150,7 @@ body {
 
 .main-title {
   display: flex;
-  justify-content: center; /* Center the title */
+  justify-content: left;
   align-items: center;
 }
 
@@ -190,12 +190,13 @@ body {
 
 .main-cards {
   text-align: center;
-  display:flex;
-  grid-template-columns: max-content ;
-  justify-content: flex-start;
+  display:grid;
+  grid-template-columns: auto;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  width: 100%;
+  max-width: 100%;
+  width: 1150px;
   gap: 10px;
 }
 
