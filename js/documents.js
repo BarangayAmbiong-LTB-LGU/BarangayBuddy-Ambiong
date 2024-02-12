@@ -15,12 +15,29 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-function updateDocumentStatus(docType, docKey, status) {
-  const documentRef = ref(database, `RequestedDocuments/${docType}/${docKey}/status`);
-  set(documentRef, status)
+
+
+function updateDocumentStatus(docType, outerDocKey, innerDocKey, status, innerDoc) {
+  if (!innerDoc) {
+    console.error("Inner document is undefined.");
+    return;
+  }
+
+  const documentRef = ref(database, `RequestedDocuments/${docType}/${outerDocKey}/${innerDocKey}`);
+  
+  set(documentRef, { ...innerDoc, status: status })
     .then(() => console.log(`${docType} document status updated to: ${status}`))
     .catch((error) => console.error("Error updating document status:", error.message));
 }
+
+
+
+
+
+
+
+
+
 function displayDocuments(docType, tableId) {
   const documentsRef = ref(database, `RequestedDocuments/${docType}`);
 
@@ -34,36 +51,47 @@ function displayDocuments(docType, tableId) {
     if (snapshot.exists()) {
       const documents = snapshot.val();
 
-      // Iterate through documents
-      Object.keys(documents).reverse().forEach((docKey) => {
-        const doc = documents[docKey];
+      // Reverse the order of document keys
+      const reversedDocEntries = Object.entries(documents).reverse();
 
-        // Append a new row to the table
-        const row = table.insertRow();
+// Inside the displayDocuments function
+reversedDocEntries.forEach(([outerDocKey, outerDoc]) => {
+  // Now iterate through inner documents in reversed order
+  Object.entries(outerDoc).reverse().forEach(([innerDocKey, innerDoc]) => {
+    // Append a new row to the table
+    const row = table.insertRow();
 
-        // Append cells to the row based on the document type
-        if (docType === 'Barangay Clearance') {
-          appendBarangayClearanceCells(row, doc);
-        } else if (docType === 'Business Clearance') {
-          appendBusinessClearanceCells(row, doc);
-        } else if (docType === 'Residency') {
-          appendResidencyCells(row, doc);
-        } else {
-          // Handle other document types here
-        }
+    // Append cells to the row based on the document type
+    if (docType === 'Barangay Clearance') {
+      appendBarangayClearanceCells(row, innerDoc);
+    } else if (docType === 'Business Clearance') {
+      appendBusinessClearanceCells(row, innerDoc);
+    } else if (docType === 'Residency') {
+      appendResidencyCells(row, innerDoc);
+    } else {
+      console.error("Unknown document type:", docType);
+      return;
+    }
 
-        // Create the actions cell and append buttons
-        const actionCell = row.insertCell();
-        const actionsBar = document.createElement('div');
-        actionsBar.classList.add('actions-bar');
-        const acceptButton = createStatusButton(docType, docKey, 'Accept');
-        const rejectButton = createStatusButton(docType, docKey, 'Reject');
-        const finishedButton = createStatusButton(docType, docKey, 'Finished');
-        actionsBar.appendChild(acceptButton);
-        actionsBar.appendChild(rejectButton);
-        actionsBar.appendChild(finishedButton);
-        actionCell.appendChild(actionsBar);
-      });
+    // Create the actions cell and append buttons
+    const actionCell = row.insertCell();
+    const actionsBar = document.createElement('div');
+    actionsBar.classList.add('actions-bar');
+    const acceptButton = createStatusButton(docType, innerDocKey, 'Accept');
+    const rejectButton = createStatusButton(docType, innerDocKey, 'Reject');
+    const finishedButton = createStatusButton(docType, innerDocKey, 'Finished');
+    actionsBar.appendChild(acceptButton);
+    actionsBar.appendChild(rejectButton);
+    actionsBar.appendChild(finishedButton);
+    actionCell.appendChild(actionsBar);
+
+    // Call updateDocumentStatus function here
+    acceptButton.addEventListener('click', () => updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Accept', innerDoc));
+    rejectButton.addEventListener('click', () => updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Reject', innerDoc));
+    finishedButton.addEventListener('click', () => updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Finished', innerDoc));
+  });
+});
+
     } else {
       console.log(`No ${docType} data available`);
     }
@@ -87,9 +115,9 @@ function appendBusinessClearanceCells(row, doc) {
   appendCell(row, doc.nameOfBussiness || 'N/A');
   appendCell(row, doc.fullname || 'N/A');
   appendCell(row, doc.businessAddress || 'N/A');
+  appendCell(row, doc.typeOfBusiness || 'N/A');
   appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
   appendCell(row, doc.status || 'N/A');
- 
 }
 
 function appendResidencyCells(row, doc) {
@@ -103,6 +131,7 @@ function appendResidencyCells(row, doc) {
   appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
   appendCell(row, doc.status || 'N/A');
 }
+
 function createStatusButton(docType, docKey, status) {
   const button = document.createElement('button');
   button.textContent = status;
@@ -117,12 +146,13 @@ function appendCell(row, text) {
   cell.appendChild(textNode);
 }
 
-
 // Execute the display functions when the window is loaded
 window.onload = function () {
   console.log('Window loaded');
+  // Display documents for different types
   displayDocuments('Barangay Clearance', 'residentsBarangayClearance');
   displayDocuments('Business Clearance', 'residentsBusinessClearance');
   displayDocuments('Residency', 'residentsResidency');
 };
+
 
