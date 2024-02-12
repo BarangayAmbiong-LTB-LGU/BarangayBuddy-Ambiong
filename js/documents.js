@@ -56,11 +56,11 @@ function displayDocuments(docType, tableId) {
         const actionCell = row.insertCell();
         const actionsBar = document.createElement('div');
         actionsBar.classList.add('actions-bar');
-        const pendingButton = createStatusButton(docType, docKey, 'Pending');
-        const workingButton = createStatusButton(docType, docKey, 'Working on it');
+        const acceptButton = createStatusButton(docType, docKey, 'Accept');
+        const rejectButton = createStatusButton(docType, docKey, 'Reject');
         const finishedButton = createStatusButton(docType, docKey, 'Finished');
-        actionsBar.appendChild(pendingButton);
-        actionsBar.appendChild(workingButton);
+        actionsBar.appendChild(acceptButton);
+        actionsBar.appendChild(rejectButton);
         actionsBar.appendChild(finishedButton);
         actionCell.appendChild(actionsBar);
       });
@@ -125,3 +125,4 @@ window.onload = function () {
   displayDocuments('Business Clearance', 'residentsBusinessClearance');
   displayDocuments('Residency', 'residentsResidency');
 };
+

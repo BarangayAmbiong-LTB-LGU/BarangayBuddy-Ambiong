@@ -31,7 +31,8 @@ function displaySuggestions() {
 
         // Iterate through the reversed suggestions and display them
         reversedSuggestions.forEach((suggestion) => {
-            const timestamp = suggestion.timestamp ? new Date(suggestion.timestamp).toLocaleString() : '';
+            const sugName = suggestion.sugName.trim() ? suggestion.sugName : 'Anonymous';
+            const timestamp = suggestion.timeStamp ? new Date(suggestion.timeStamp).toLocaleString() : '';
             let shortDescription = suggestion.suggest;
             let showButton = false;
             if (suggestion.suggest.length > 100) {
@@ -43,7 +44,7 @@ function displaySuggestions() {
                     <div class="card">
                         <div class="card-inner">
                             <a>
-                                <div class="text-primary"><strong>From: ${suggestion.sugName}</strong></div>
+                                <div class="text-primary"><strong>From: ${sugName}</strong></div>
                                 <div><small>Added on: ${timestamp}</small></div>
                                 <br> 
                                 <div class="suggestion-description">${shortDescription}</div>
@@ -73,6 +74,7 @@ function displaySuggestions() {
         });
     });
 }
+
 // Execute the displaySuggestions function when the window is loaded
 window.onload = function () {
     console.log('Window loaded');

@@ -358,3 +358,21 @@ body {
     display: none;
   }
 }
+
+.report-box {
+  background-color: #960019; 
+  border: 2px solid #ccc; 
+  border-radius: 8px; 
+  padding: 10px; 
+  display: inline-block; 
+}
+
+.report-box h2 {
+  margin: 0; 
+  text-align: right; 
+  font-size: 18px; 
+}
+
+#totalReportsCount {
+  color: #FFFFFF; 
+}
