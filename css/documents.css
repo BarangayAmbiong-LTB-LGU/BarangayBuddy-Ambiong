@@ -419,6 +419,40 @@ body {
     }
   }
 
+  /* Adjustments for smaller screens like laptops and tablets */
+@media screen and (max-width: 992px) {
+  .table-responsive table {
+    width: 100%;
+  }
+
+  .table-responsive table thead {
+    display: none;
+  }
+
+  .table-responsive table tbody,
+  .table-responsive table tr,
+  .table-responsive table th,
+  .table-responsive table td {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+
+  .table-responsive table td,
+  .table-responsive table th {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .table-responsive table td:last-child,
+  .table-responsive table th:last-child {
+    border-bottom: none;
+  }
+
+  .table-responsive table tbody tr {
+    margin-bottom: 10px;
+  }
+}
 
   .card {
     display: flex;
@@ -461,3 +495,37 @@ body {
     padding: 10px;
   }
   
+  /* Add this CSS for responsiveness */
+
+/* Responsive table */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Hide table header on small screens */
+.table-responsive table thead {
+  display: none;
+}
+
+/* Display table header as block for smaller screens */
+.table-responsive table th {
+  display: block;
+  text-align: left;
+}
+
+/* Adjust table cells for smaller screens */
+.table-responsive table td {
+  display: block;
+  text-align: left;
+  border: none;
+}
+
+/* Add padding to table cells */
+.table-responsive table td {
+  padding: 8px;
+}
+
+/* Add margin to table rows for better separation */
+.table-responsive table tbody tr {
+  margin-bottom: 10px;
+}
