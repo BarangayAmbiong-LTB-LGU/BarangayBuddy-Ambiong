@@ -38,7 +38,7 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 360px 1fr 1fr 260px; /* Updated grid template columns */
+  grid-template-columns: 260px 1fr 1fr 1fr; /* Updated grid template columns */
   grid-template-rows: 0.2fr 3fr;
   grid-template-areas:
     "sidebar header header header"
@@ -190,14 +190,16 @@ body {
 
 .main-cards {
   text-align: center;
-  display:grid;
-  grid-template-columns: auto;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr; /* Single column */
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  max-width: 100%;
-  width: 1150px;
+  max-width: 300%;
+  width: 300%; /* Adjust as needed */
+  margin: 0 auto; /* Center the grid */
   gap: 10px;
+  height: 100vh; /* Set the height to fill the viewport height, adjust as needed */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds viewport height */
 }
 
 .card { 
@@ -361,3 +363,16 @@ margin-top: 30px;
 display: none;
 }
 }
+
+@media only screen and (max-width: 1024px) {
+  .main-cards {
+    width: 95%; /* Adjust width for medium-sized screens */
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .main-cards {
+    width: 95%; /* Adjust width for smaller screens */
+  }
+}
+

@@ -282,7 +282,11 @@ body {
     display: flex;
     justify-content: space-between;
   }
-  
+
+  .publish-btn {
+    margin-bottom: 10px;
+  }
+
   .actions-bar button.publish-btn {
     padding: 5px 10px;
     margin-right: 10px;
