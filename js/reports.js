@@ -33,44 +33,43 @@ function displayReports() {
         // Clear existing reports and headers
         reportsTable.innerHTML = '';
 
-        // Convert the snapshot to an array
-        const reportsArray = Object.values(snapshot.val());
+        // Check if snapshot exists and has data
+        if (snapshot.exists() && snapshot.val()) {
+            // Convert the snapshot to an object containing client IDs as keys
+            const clientReports = snapshot.val();
 
-        // Reverse the order of the reports array
-        reportsArray.reverse();
+            // Iterate over each client's reports
+            Object.keys(clientReports).forEach((clientId, index) => {
+                const client = clientReports[clientId];
 
-        // Check if there are reports
-        if (reportsArray.length > 0) {
-            // Get the properties of the first report
-            const reportKeys = Object.keys(reportsArray[0]);
+                // Iterate over each report for the current client
+                Object.keys(client).forEach((reportId, reportIndex) => {
+                    const report = client[reportId];
 
-            // Remove the 'resId' and 'timeStamp' properties from the keys
-            const filteredReportKeys = reportKeys.filter(key => key !== 'resId' && key !== 'timeStamp');
+                    // Format timestamp
+                    const timestamp = new Date(report.timeStamp).toLocaleString();
 
-            // Create table headers based on filtered report properties
-            const tableHeaders = `
-                <tr>
-                    ${filteredReportKeys.map(key => `<th>${propertyTitles[key]}</th>`).join('')}
-                    <th>Date and Time of Incident</th>
-                </tr>
-            `;
-            reportsTable.innerHTML += tableHeaders;
+                    // Add table headers before the first report
+                    if (index === 0 && reportIndex === 0) {
+                        const reportKeys = Object.keys(report).filter(key => key !== 'resId' && key !== 'timeStamp');
+                        const tableHeaders = `
+                            <tr>
+                                ${reportKeys.map(key => `<th>${propertyTitles[key]}</th>`).join('')}
+                                <th>Date and Time of Incident</th>
+                            </tr>
+                        `;
+                        reportsTable.innerHTML += tableHeaders;
+                    }
 
-            // Iterate through the reversed reports and display them
-            reportsArray.forEach((report, index) => {
-                // Remove the 'resId' property from the report object
-                delete report.resId;
-                
-                // Format timestamp
-                const timestamp = new Date(report.timeStamp).toLocaleString();
-
-                const reportHtml = `
-                    <tr${index === 0 ? ' class="new-report"' : ''}>
-                        ${filteredReportKeys.map(key => `<td>${report[key]}</td>`).join('')}
-                        <td>${timestamp}</td>
-                    </tr>
-                `;
-                reportsTable.innerHTML += reportHtml;
+                    // Create table row for the report
+                    const reportHtml = `
+                        <tr>
+                            ${Object.keys(report).filter(key => key !== 'resId' && key !== 'timeStamp').map(key => `<td>${report[key]}</td>`).join('')}
+                            <td>${timestamp}</td>
+                        </tr>
+                    `;
+                    reportsTable.innerHTML += reportHtml;
+                });
             });
         } else {
             // Display a message if there are no reports

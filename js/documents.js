@@ -32,12 +32,6 @@ function updateDocumentStatus(docType, outerDocKey, innerDocKey, status, innerDo
 
 
 
-
-
-
-
-
-
 function displayDocuments(docType, tableId) {
   const documentsRef = ref(database, `RequestedDocuments/${docType}`);
 
@@ -68,10 +62,14 @@ reversedDocEntries.forEach(([outerDocKey, outerDoc]) => {
       appendBusinessClearanceCells(row, innerDoc);
     } else if (docType === 'Residency') {
       appendResidencyCells(row, innerDoc);
+    } else if (docType === 'Others') {
+      appendOthersCells(row, innerDoc);
+
     } else {
       console.error("Unknown document type:", docType);
       return;
     }
+    
 
     // Create the actions cell and append buttons
     const actionCell = row.insertCell();
@@ -132,6 +130,20 @@ function appendResidencyCells(row, doc) {
   appendCell(row, doc.status || 'N/A');
 }
 
+function appendOthersCells(row, doc) {
+  appendCell(row, doc.fullName || 'N/A');
+  appendCell(row, doc.age || 'N/A');
+  appendCell(row, doc.gender || 'N/A');
+  appendCell(row, doc.address || 'N/A');
+  appendCell(row, doc.civilStatus || 'N/A');
+  appendCell(row, doc.dateOfBirth || 'N/A');
+  appendCell(row, doc.documentType || 'N/A');
+  appendCell(row, doc.duration || 'N/A');
+  appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
+  appendCell(row, doc.status || 'N/A');
+}
+
+
 function createStatusButton(docType, docKey, status) {
   const button = document.createElement('button');
   button.textContent = status;
@@ -153,6 +165,8 @@ window.onload = function () {
   displayDocuments('Barangay Clearance', 'residentsBarangayClearance');
   displayDocuments('Business Clearance', 'residentsBusinessClearance');
   displayDocuments('Residency', 'residentsResidency');
+  displayDocuments('Others', 'residentsOthers');
+
 };
 
 
