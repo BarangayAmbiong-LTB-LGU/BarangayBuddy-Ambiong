@@ -23,8 +23,17 @@ function countReports() {
     if (reportsCountElement) {
         onValue(reportsRef, (snapshot) => {
             const reports = snapshot.val();
-            const count = reports ? Object.keys(reports).length : 0;
-            reportsCountElement.innerHTML = `<h2 style="font-size: 24px; text-align: right; margin-right: 20px;">Total reports: ${count}</h2>`;
+            let totalCount = 0;
+            if (reports) {
+                // Iterate over each client
+                Object.values(reports).forEach(client => {
+                    // Count the number of reports for each client
+                    totalCount += Object.keys(client).length;
+                });
+            }
+            reportsCountElement.innerHTML = `<h2 style="font-size: 24px; text-align: right; margin-right: 20px;">Total reports: ${totalCount}</h2>`;
+        }, (error) => {
+            console.error('Error fetching reports:', error.message);
         });
     } else {
         console.error("Element with ID 'totalReportsCount' not found.");

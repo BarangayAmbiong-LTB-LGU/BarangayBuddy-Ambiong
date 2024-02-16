@@ -22,9 +22,9 @@ const reportsRef = ref(database, 'Resident_Reports');
 const propertyTitles = {
   resCurLoc: 'Current Location',
   resName: 'Name of Resident',
-  resReport: 'Report'
+  resReport: 'Report',
+  reportType: 'Report Type'
 };
-
 
 function displayReports() {
     onValue(reportsRef, (snapshot) => {
@@ -38,19 +38,22 @@ function displayReports() {
             // Convert the snapshot to an object containing client IDs as keys
             const clientReports = snapshot.val();
 
-            // Iterate over each client's reports
-            Object.keys(clientReports).forEach((clientId, index) => {
+            // Get an array of client IDs in reverse order
+            const clientIds = Object.keys(clientReports).reverse();
+
+            // Iterate over each client's reports in reverse order
+            clientIds.forEach((clientId) => {
                 const client = clientReports[clientId];
+                const reportIds = Object.keys(client).reverse(); // Get an array of report IDs in reverse order
 
-                // Iterate over each report for the current client
-                Object.keys(client).forEach((reportId, reportIndex) => {
+                // Iterate over each report for the current client in reverse order
+                reportIds.forEach((reportId) => {
                     const report = client[reportId];
-
                     // Format timestamp
                     const timestamp = new Date(report.timeStamp).toLocaleString();
 
                     // Add table headers before the first report
-                    if (index === 0 && reportIndex === 0) {
+                    if (reportId === reportIds[0]) {
                         const reportKeys = Object.keys(report).filter(key => key !== 'resId' && key !== 'timeStamp');
                         const tableHeaders = `
                             <tr>
@@ -77,7 +80,6 @@ function displayReports() {
         }
     });
 }
-
 
 
 // Execute the countReports and displayReports functions when the window is loaded
