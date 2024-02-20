@@ -576,3 +576,31 @@ body {
 .toast-body {
   font-size: 1.25rem !important;
 }
+
+.document-nav{
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: space-between;
+  color: #333;
+}
+
+.document-nav ul{
+  display: inline-flex;
+  justify-content: space-between;
+  float: right;
+  list-style: none;
+}
+
+.document-nav a{
+  color: #333;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.document-nav a:hover{
+  background-color: #960019;
+  color: #fff;
+}
+
