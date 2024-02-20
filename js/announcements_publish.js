@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const imageInput = document.getElementById('image');
   const imagePreview = document.getElementById('imagePreview');
 
+
   imageInput.addEventListener('change', previewImage);
 
   const announcementsRef = databaseRef(database, 'announcements');
@@ -43,8 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const description = document.createElement('p');
     description.textContent = announcement.description;
 
-    // Add more elements based on your announcement structure
-
     announcementCard.appendChild(title);
     announcementCard.appendChild(description);
 
@@ -63,4 +62,11 @@ document.addEventListener("DOMContentLoaded", function () {
       reader.readAsDataURL(imageInput.files[0]);
     }
   }
+
+  announcementForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent form submission
+    showSuccessToast();
+  });
 });
+
+

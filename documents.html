@@ -28,9 +28,20 @@
         <p class="text-primary">Home</p>
       </a>
     </div>
+
+
+<div class="search-container">
+  <input id="searchInput" class="search-input" type="text" placeholder="Search...">
+  <i class="fas fa-search search-icon"></i> 
+</div>
+
+
+
     <div class="header-right">
       <a href="login.html" class="logout"><span class="material-icons-outlined">logout</span></a>
     </div>
+
+    
   </header>
   <!-- End Header -->
 
@@ -83,11 +94,6 @@
     <div class="main-title">
       <p class="font-weight-bold">Manage Documents</p>
     </div>
-
-  
-      
-    
-
     <div class="main-cards">
       <div class="card" id="barangayClearanceCard">
         <div class="main-title">
@@ -175,7 +181,7 @@
                 <th>Civil Status</th>
                 <th>Date of Birth</th>
                 <th>Document Type</th>
-                <th>Duration</th>
+                <th>Purpose</th>
                 <th>Date & Time of Request</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -185,12 +191,38 @@
           </table>
         </div>
       </div>
-    </div>
-  </main>
-</div>
+   
+
+      <div class="card" id="FinishedCard">
+        <div class="main-title">
+          <p class="font-weight-bold">Finished documents</p>
+        </div>
+        <div class="card-content">
+          <table id="doneDocumentsTable" class="table-responsive">
+            <thead>
+              <tr>
+                <th>Document Type</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Purpose</th>
+                <th>Date & Time of Request</th>
+                <th>Status</th>
+                
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+
+
 
 <script src="./js/script.js"></script>
 <script type="module" src="js/documents.js"></script>
-<script type="module" src="js/documents push notif.js"></script>
+<script type="module" src="js/search.js"></script>
 </body>
 </html>

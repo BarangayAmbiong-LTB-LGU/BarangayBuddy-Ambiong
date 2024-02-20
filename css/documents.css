@@ -533,3 +533,46 @@ body {
 .table-responsive table tbody tr {
   margin-bottom: 10px;
 }
+
+
+
+
+/* search */
+
+
+/* CSS for the search input */
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  width: 300px; /* Adjust width as needed */
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #007bff; /* Change border color on focus */
+}
+
+/* CSS for the search icon */
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #777; /* Adjust icon color */
+  cursor: pointer;
+}
+
+
+
+/* TOAST */
+
+.toast-body {
+  font-size: 1.25rem !important;
+}

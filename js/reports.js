@@ -23,7 +23,8 @@ const propertyTitles = {
   resCurLoc: 'Current Location',
   resName: 'Name of Resident',
   resReport: 'Report',
-  reportType: 'Report Type'
+  reportType: 'Report Type',
+  phoneNumber: 'Phone number'
 };
 
 function displayReports() {
