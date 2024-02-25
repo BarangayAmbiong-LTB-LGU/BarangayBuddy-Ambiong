@@ -229,6 +229,7 @@ body {
 
   .file-input-container {
     position: relative;
+    overflow: hidden;
     display: inline-block;
   }
   
@@ -237,18 +238,26 @@ body {
   }
   
   .custom-file-input {
-    display: inline-block;
     padding: 10px 20px;
-    background-color: #666666;
-    color: #fff;
-    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
     border: none;
     border-radius: 5px;
+    background-color: #960019;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
   }
   
+
   .custom-file-input:hover {
     background-color: #960019;
   }
+
+.file-input-container input[type="file"] {
+  display: none;
+}
 
   textarea {
   resize: none;
@@ -350,3 +359,14 @@ body {
       display: none;
     }
   }
+
+
+  .toast {
+    position: fixed;
+    top: 20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000; 
+    max-width: 100%;
+    width: 1000px; /* Adjust the width as needed */
+}

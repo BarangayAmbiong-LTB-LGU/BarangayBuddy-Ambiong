@@ -1,152 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Publish Announcements</title>
-
-    <!-- Montserrat Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/announcements_publish.css">
-  </head>
-  <body>
-    <div class="grid-container">
-
-      <!-- Header -->
-      <header class="header">
-        <div class="menu-icon" onclick="openSidebar()">
-          <span class="material-icons-outlined">menu</span>
-        </div>
-        <div class="header-left">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publish Announcements</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/announcements_publish.css">
+</head>
+<body>
+  <div class="grid-container">
+    <header class="header">
+      <div class="menu-icon" onclick="openSidebar()">
+        <span class="material-icons-outlined">menu</span>
+      </div>
+      <div class="header-left">
+        <a href="index.html">
+          <p class="text-primary">Home</p>
+        </a>
+      </div>
+      <div class="header-right">
+        <a href="login.html" class="logout"><span class="material-icons-outlined">logout</span></a>
+      </div>
+    </header>
+    <aside id="sidebar">
+      <div class="sidebar-title">
+        <div class="sidebar-brand" >
           <a href="index.html">
-            <p class="text-primary">Home</p>
-          </a>
-        </div>
-        <div class="header-right">
-          <a href="login.html" class="logout"><span class="material-icons-outlined">logout</span></a>
-        </div>
-      </header>
-      <!-- End Header -->
-
-      <!-- Sidebar -->
-      <aside id="sidebar">
-        <div class="sidebar-title">
-          <div class="sidebar-brand" >
-            <a href="index.html">
             <span class="material-icons-outlined" >location_city</span>  Barangay Buddy
-            </a>
-          </div>
-          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+          </a>
         </div>
-
-        <ul class="sidebar-list">
-            
-          <a href="index.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">dashboard</span> Dashboard
-            </li>
-          </a>
-          
-          <a href="documents.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">description</span> Requested Barangay Documents
-            </li>
-          </a>
-
-          <a href="reports_dashboard.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">poll</span> Manage Reports
-            </li>
-          </a>
-
-          <a href="suggestions.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">people</span> Suggestions
-            </li>
-          </a>
-
-          <a href="announcements_history.html">
-            <li class="sidebar-list-item">
-              <span class="material-icons-outlined">campaign</span> Announcements
-            </li>
-          </a>
-
-        </ul>
-        
-      </aside>
-      <!-- End Sidebar -->
-
-      <!-- Main -->
-      <main class="main-container">
-     
-
-        <div class="main-title">
-          <p class="font-weight-bold">Publish Announcement</p>
-        </div>
-
-
-        <div class="main-cards">
-          <div class="card">
-              <div class="announcement-form">
-              <form id="announcementForm" class="form">
-
-
-
-                <label for="title" class="title">Title:</label>
-                <input type="text" id="title" required>
-        
-                <label for="description" class="description">Description:</label>
-                <textarea id="description" required></textarea>
-        
-                <label for="image" class="image">Image:</label>
-                <div class="file-input-container">
-                  <input type="file" id="image" accept="image/*">
-                  <label for="image" class="custom-file-input">Browse</label>
-                </div>
-                <br>
-                    <!-- Your toast element -->
-    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-          <strong class="mr-auto">Success</strong>
-          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
+        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
       </div>
-      <div class="toast-body">
-          Announcement successfully posted!
+      <ul class="sidebar-list">
+        <a href="index.html"><li class="sidebar-list-item"><span class="material-icons-outlined">dashboard</span> Dashboard</li></a>
+        <a href="documents.html"><li class="sidebar-list-item"><span class="material-icons-outlined">description</span> Requested Barangay Documents</li></a>
+        <a href="reports_dashboard.html"><li class="sidebar-list-item"><span class="material-icons-outlined">poll</span> Manage Reports</li></a>
+        <a href="suggestions.html"><li class="sidebar-list-item"><span class="material-icons-outlined">people</span> Suggestions</li></a>
+        <a href="announcements_history.html"><li class="sidebar-list-item"><span class="material-icons-outlined">campaign</span> Announcements</li></a>
+      </ul>
+    </aside>
+    <main class="main-container">
+      <div class="main-title">
+        <p class="font-weight-bold">Publish Announcement</p>
       </div>
-  </div>
-                <br>
-                <button type="submit" class="submit" onclick="showSuccessToast()">Post Announcement</button>
-                <br>
-                <br>
-                </form>
-                <a href="announcements_history.html"> <button class="submit">Back</button></a>
+      <div class="main-cards">
+        <div class="card">
+          <div class="announcement-form">
+            <form id="announcementForm" class="form">
+              <label for="title" class="title">Title:</label>
+              <input type="text" id="title" required>
+              <label for="description" class="description">Description:</label>
+              <textarea id="description" required></textarea>
+              <label for="image" class="image">Image:</label>
+              <div class="file-input-container">
+                <input type="file" id="image" accept="image/*" class="input-file">
+                <label for="image" class="custom-file-input">Choose File</label>
               </div>
-            </div>
+
+              <br>
+            
+              <br>
+              <button type="submit" class="submit" onclick="showSuccessToast()">Post Announcement</button>
+              <br>
+              <br>
+            </form>
+            <a href="announcements_history.html"><button class="submit">Back</button></a>
           </div>
         </div>
-      </main>
+      </div>
+    </main>
+  </div>
+
+  <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="mr-auto">Success</strong>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+    <div class="toast-body">
+      Announcement successfully posted!
+    </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-
-    <script>
-      function showSuccessToast() {
-          const successToast = new bootstrap.Toast(document.getElementById('successToast'));
-          successToast.show();
-      }
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function showSuccessToast() {
+      const successToast = new bootstrap.Toast(document.getElementById('successToast'));
+      successToast.show();
+    }
   </script>
-
-    <script src="js/script.js"></script>
-    <script type="module" src="js/announcements.js"></script>
-  </body>
+  <script src="js/script.js"></script>
+  <script type="module" src="js/announcements.js"></script>
+</body>
 </html>
