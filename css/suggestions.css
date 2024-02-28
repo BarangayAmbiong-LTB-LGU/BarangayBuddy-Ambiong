@@ -183,9 +183,7 @@ body {
     box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
   }
   
-  .card:hover{
-    background-color: #9799ab;
-  }
+ 
   
   .card {
     border-left: 7px solid #960019;
@@ -365,3 +363,71 @@ body {
   .submit:hover {
     background-color: #21232d;
   }
+
+  /* CSS for table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* CSS for "See More" link */
+.see-more {
+  color: blue;
+  cursor: pointer;
+}
+
+.publish-btn {
+  padding: 5px 10px; /* Adjust padding for smaller size */
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #960019;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  display: inline-block; /* Ensure the button stays on the same line */
+}
+
+.publish-btn:hover {
+  background-color: #666666;
+}
+
+
+.table-responsive {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.table-responsive th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table-responsive tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+
+
+

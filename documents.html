@@ -67,7 +67,7 @@
 
       <a href="reports_dashboard.html">
         <li class="sidebar-list-item">
-          <span class="material-icons-outlined">poll</span> Manage Reports
+          <span class="material-icons-outlined">poll</span> Barangay Resident Concerns
         </li>
       </a>
 
@@ -97,7 +97,7 @@
           <a href="#businessClearanceCard"><li>Business Clearance</li></a>
           <a href="#ResidencyCard"><li>Residency</li></a>
           <a href="#othersCard"><li>Others</li></a>
-          <a href="#othersCard"><li>Finished Documents</li></a>
+          <a href="#FinishedCard"><li>Finished Documents</li></a>
         </ul>
       </nav>
     </div>
@@ -201,9 +201,12 @@
       </div>
    
 
+    
+      
       <div class="card" id="FinishedCard">
-        <div class="main-title">
-          <p class="font-weight-bold">Finished documents</p>
+        <div class="FinishedCard">
+          <p class="font-weight-bold">Claimed documents</p>
+          <button class="publish-btn" id="printButton">Print Table</button>
         </div>
         <div class="card-content">
           <table id="doneDocumentsTable" class="table-responsive">
@@ -218,19 +221,22 @@
                 <th>Purpose</th>
                 <th>Date & Time of Request</th>
                 <th>Status</th>
-                
               </tr>
             </thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
+      
+      
+ 
+       </main>
+     
 
 
 
 
 <script src="./js/script.js"></script>
 <script type="module" src="js/documents.js"></script>
-<script type="module" src="js/search.js"></script>
 </body>
 </html>

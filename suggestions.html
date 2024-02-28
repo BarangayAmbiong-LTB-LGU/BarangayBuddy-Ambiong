@@ -60,7 +60,7 @@
 
           <a href="reports_dashboard.html">
             <li class="sidebar-list-item">
-              <span class="material-icons-outlined">poll</span> Manage Reports
+              <span class="material-icons-outlined">poll</span> Barangay Resident Concerns
             </li>
           </a>
 
@@ -98,19 +98,34 @@
                 <a href="#" id="othersCategory">Others</a>
             </div>
         </div>
+
+        <br>
+        <br>
+        <br>
+
     
-        <div class="main-cards">
-            <div class="main-cards" id="suggestionsContainer"></div>
+        <div class="card" id="suggestionsTable">
+          <div class="card-content">
+            <table id="Suggestions" class="table-responsive">
+              <thead>
+                <tr>
+                  <th style="width: 25%;">Category</th>
+                  <th style="width: 25%;">From</th>
+                  <th style="width: 35%;">Suggestion</th>
+                  <th style="width: 15%;">Date Posted</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
         </div>
+
+        
     </main>
     
-      <!-- End Main -->
-
-    </div>
-
+     
    
-    
-    <!-- Custom JS -->
+
     <script src="js/script.js"></script>
     <script type="module" src="js/suggestions.js"></script>
   </body>

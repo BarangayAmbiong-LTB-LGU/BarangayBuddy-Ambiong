@@ -17,134 +17,103 @@ const database = getDatabase(app);
 
 // Reference to the 'Suggestions' node
 const suggestionsRef = ref(database, 'Suggestions');
-// Function to display all suggestions
-function displaySuggestions() {
-    onValue(suggestionsRef, (snapshot) => {
-        const suggestionsContainer = document.getElementById('suggestionsContainer');
 
-        // Clear existing suggestions
-        suggestionsContainer.innerHTML = '';
+// Function to display all suggestions in a table
+function displaySuggestionsAsTable() {
+    onValue(suggestionsRef, (snapshot) => {
+        const suggestionsTable = document.getElementById('suggestionsTable');
+        const tbody = suggestionsTable.getElementsByTagName('tbody')[0];
+        tbody.innerHTML = ''; // Clear existing table body
 
         // Convert the snapshot to an array and reverse it
         const reversedSuggestions = Object.values(snapshot.val()).reverse();
 
-        // Iterate through the reversed suggestions and display them
+        // Iterate through the reversed suggestions and add them to the table
         reversedSuggestions.forEach((suggestion) => {
             const sugName = suggestion.sugName.trim() ? suggestion.sugName : 'Anonymous';
             const timestamp = suggestion.timeStamp ? new Date(suggestion.timeStamp).toLocaleString() : '';
-            let shortDescription = suggestion.suggest;
-            let showButton = false;
-            if (suggestion.suggest.length > 100) {
-                shortDescription = suggestion.suggest.slice(0, 100) + '...';
-                showButton = true;
+            const category = (
+                (suggestion.healthChecked ? 'Health' : '') +
+                (suggestion.educationChecked ? (suggestion.healthChecked ? ', Education' : 'Education') : '') +
+                (suggestion.sportsChecked ? (suggestion.healthChecked || suggestion.educationChecked ? ', Sports' : 'Sports') : '') +
+                (suggestion.barangayImprovementsChecked ? (suggestion.healthChecked || suggestion.educationChecked || suggestion.sportsChecked ? ', Barangay Improvements' : 'Barangay Improvements') : '') +
+                (suggestion.othersChecked ? (suggestion.healthChecked || suggestion.educationChecked || suggestion.sportsChecked || suggestion.barangayImprovementsChecked ? ', Others' : 'Others') : '')
+            );
+
+            // Check if the suggestion text is long
+            const suggestionText = suggestion.suggest;
+            const isLongSuggestion = suggestionText.length > 100;
+
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${category}</td>
+                <td>${sugName}</td>
+                <td>${isLongSuggestion ? truncateText(suggestionText).shortText : suggestionText}</td>
+                <td>${timestamp}</td>
+            `;
+
+            if (isLongSuggestion) {
+                // Add "See More" button if the suggestion is long
+// Add "See More" button if the suggestion is long
+const cell = row.cells[2];
+const { fullText, shortText } = truncateText(suggestionText);
+cell.innerHTML = shortText + ' <span class="publish-btn see-more">See More</span>';
+// Store full and short texts as data attributes
+cell.dataset.fullText = fullText;
+cell.dataset.shortText = shortText;
+
             }
-            const suggestionHtml = `
-            <div class="main-card">
-                <div class="card">
-                    <div class="card-inner">
-                        <a>
-                            <div class="text-primary"><strong>From: ${sugName}</strong></div>
-                            <div><small>Added on: ${timestamp}</small></div>
-                            <div><strong>Category: ${
-                                (suggestion.healthChecked ? 'Health' : '') +
-                                (suggestion.educationChecked ? (suggestion.healthChecked ? ', Education' : 'Education') : '') +
-                                (suggestion.sportsChecked ? (suggestion.healthChecked || suggestion.educationChecked ? ', Sports' : 'Sports') : '') +
-                                (suggestion.barangayImprovementsChecked ? (suggestion.healthChecked || suggestion.educationChecked || suggestion.sportsChecked ? ', Barangay Improvements' : 'Barangay Improvements') : '') +
-                                (suggestion.othersChecked ? (suggestion.healthChecked || suggestion.educationChecked || suggestion.sportsChecked || suggestion.barangayImprovementsChecked ? ', Others' : 'Others') : '')
-                            }</strong></div>
-                            <br> 
-                            <div class="suggestion-description">${shortDescription}</div>
-                            ${showButton ? `<button type="submit" class="submit expand-button" data-description="${suggestion.suggest}">Read More</button>` : ''}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-
-            suggestionsContainer.innerHTML += suggestionHtml;
-        });
-
-        // Add event listeners to expand buttons
-        const expandButtons = document.querySelectorAll('.expand-button');
-        expandButtons.forEach((button) => {
-            button.addEventListener('click', function() {
-                const description = this.dataset.description;
-                const suggestionDescription = this.parentElement.querySelector('.suggestion-description');
-                if (suggestionDescription.textContent === description) {
-                    suggestionDescription.textContent = description.slice(0, 100) + '...';
-                    this.textContent = 'Read More';
-                } else {
-                    suggestionDescription.textContent = description;
-                    this.textContent = 'Show Less';
-                }
-            });
         });
     });
 }
 
+// Event listener for "See More" functionality
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('see-more')) {
+        const suggestionDescription = event.target.parentNode;
+        const fullText = suggestionDescription.dataset.fullText;
+        suggestionDescription.innerHTML = fullText + ' <span class="publish-btn see-less">Show Less</span>';
+    } else if (event.target.classList.contains('see-less')) {
+        const suggestionDescription = event.target.parentNode;
+        const shortText = suggestionDescription.dataset.shortText;
+        suggestionDescription.innerHTML = shortText + ' <span class="publish-btn see-more">See More</span>';
+    }
+});
+
+
+
+
 // Function to filter suggestions based on selected category
 function filterSuggestionsByCategory(snapshot, category) {
-    const suggestionsContainer = document.getElementById('suggestionsContainer');
-
-    // Clear existing suggestions
-    suggestionsContainer.innerHTML = '';
+    const suggestionsTable = document.getElementById('suggestionsTable');
+    const tbody = suggestionsTable.getElementsByTagName('tbody')[0];
+    tbody.innerHTML = ''; // Clear existing table body
 
     // Convert the snapshot to an array and reverse it
     const reversedSuggestions = Object.values(snapshot.val()).reverse();
 
-    // Iterate through the reversed suggestions and display them
+    // Iterate through the reversed suggestions and add them to the table
     reversedSuggestions.forEach((suggestion) => {
         // Check if the suggestion matches the selected category
         if (suggestion[category]) {
             const sugName = suggestion.sugName.trim() ? suggestion.sugName : 'Anonymous';
             const timestamp = suggestion.timeStamp ? new Date(suggestion.timeStamp).toLocaleString() : '';
-            let shortDescription = suggestion.suggest;
-            let showButton = false;
-            if (suggestion.suggest.length > 100) {
-                shortDescription = suggestion.suggest.slice(0, 100) + '...';
-                showButton = true;
-            }
-            const suggestionHtml = `
-            <div class="main-card">
-                <div class="card">
-                    <div class="card-inner">
-                        <a>
-                            <div class="text-primary"><strong>From: ${sugName}</strong></div>
-                            <div><small>Added on: ${timestamp}</small></div>
-                            <div><strong>Category: ${
-                                (suggestion.healthChecked ? 'Health' : '') +
-                                (suggestion.educationChecked ? (suggestion.healthChecked ? ', Education' : 'Education') : '') +
-                                (suggestion.sportsChecked ? (suggestion.healthChecked || suggestion.educationChecked ? ', Sports' : 'Sports') : '') +
-                                (suggestion.barangayImprovementsChecked ? (suggestion.healthChecked || suggestion.educationChecked || suggestion.sportsChecked ? ', Barangay Improvements' : 'Barangay Improvements') : '') +
-                                (suggestion.othersChecked ? (suggestion.healthChecked || suggestion.educationChecked || suggestion.sportsChecked || suggestion.barangayImprovementsChecked ? ', Others' : 'Others') : '')
-                            }</strong></div>
-                            <br> 
-                            <div class="suggestion-description">${shortDescription}</div>
-                            ${showButton ? `<button type="submit" class="submit expand-button" data-description="${suggestion.suggest}">Read More</button>` : ''}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-            suggestionsContainer.innerHTML += suggestionHtml;
-        }
-    });
+            const categoryText = (
+                (suggestion.healthChecked ? 'Health' : '') +
+                (suggestion.educationChecked ? (suggestion.healthChecked ? ', Education' : 'Education') : '') +
+                (suggestion.sportsChecked ? (suggestion.healthChecked || suggestion.educationChecked ? ', Sports' : 'Sports') : '') +
+                (suggestion.barangayImprovementsChecked ? (suggestion.healthChecked || suggestion.educationChecked || suggestion.sportsChecked ? ', Barangay Improvements' : 'Barangay Improvements') : '') +
+                (suggestion.othersChecked ? (suggestion.healthChecked || suggestion.educationChecked || suggestion.sportsChecked || suggestion.barangayImprovementsChecked ? ', Others' : 'Others') : '')
+            );
 
-    // Add event listeners to expand buttons
-    const expandButtons = document.querySelectorAll('.expand-button');
-    expandButtons.forEach((button) => {
-        button.addEventListener('click', function() {
-            const description = this.dataset.description;
-            const suggestionDescription = this.parentElement.querySelector('.suggestion-description');
-            if (suggestionDescription.textContent === description) {
-                suggestionDescription.textContent = description.slice(0, 100) + '...';
-                this.textContent = 'Read More';
-            } else {
-                suggestionDescription.textContent = description;
-                this.textContent = 'Show Less';
-            }
-        });
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td>${categoryText}</td>
+                <td>${sugName}</td>
+                <td>${suggestion.suggest}</td>
+                <td>${timestamp}</td>
+            `;
+        }
     });
 }
 
@@ -156,13 +125,32 @@ function displaySuggestionsByCategory(category) {
 }
 
 
-// Execute the displaySuggestions function when the window is loaded
+// Function to truncate text and add "See More" functionality
+function truncateText(text) {
+    const maxLength = 100;
+    if (text.length <= maxLength) return { fullText: text, shortText: text };
+    const truncatedText = text.slice(0, maxLength) + '...';
+    return { fullText: text, shortText: truncatedText };
+}
+
+
+// Event listener for "See More" functionality
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('see-more')) {
+        const suggestionDescription = event.target.parentNode;
+        const fullText = suggestionDescription.textContent.replace('See More', '');
+        suggestionDescription.innerHTML = fullText;
+    }
+});
+
+
+// Execute the displaySuggestionsAsTable function when the window is loaded
 window.onload = function () {
     console.log('Window loaded');
     
     // Add event listeners to category links
     document.getElementById('allCategory').addEventListener('click', () => {
-        displaySuggestions();
+        displaySuggestionsAsTable();
     });
     document.getElementById('healthCategory').addEventListener('click', () => {
         displaySuggestionsByCategory('healthChecked');
@@ -181,5 +169,7 @@ window.onload = function () {
     });
     
     // Display all suggestions by default
-    displaySuggestions();
+    displaySuggestionsAsTable();
 };
+
+

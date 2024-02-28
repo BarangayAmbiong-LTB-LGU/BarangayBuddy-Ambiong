@@ -25,7 +25,7 @@ function moveDoneRowsToFinishedDocuments(docType) {
     const rows = Array.from(tbody.querySelectorAll('tr'));
 
     // Separate done rows from the rest
-    const doneRows = rows.filter(row => row.cells[row.cells.length - 1].textContent.trim() === 'Done');
+    const doneRows = rows.filter(row => row.cells[row.cells.length - 1].textContent.trim() === 'Claimed');
 
     // Move done rows to the "Finished documents" table
     const doneTable = document.getElementById('doneDocumentsTable').getElementsByTagName('tbody')[0];
@@ -42,7 +42,7 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 export function updateDocumentStatus(docType, outerDocKey, innerDocKey, status) {
-  if (status === 'Done') {
+  if (status === 'Claimed') {
     // Get a reference to the document that is marked as done
     const documentRef = ref(database, `RequestedDocuments/${docType}/${outerDocKey}/${innerDocKey}`);
 
@@ -212,9 +212,9 @@ function appendButtonsToRow(row, docType, outerDocKey, innerDocKey, innerDoc) {
 
   // Create buttons for different actions
   const acceptButton = createStatusButton(docType, outerDocKey, innerDocKey, 'Accept');
-  const rejectButton = createStatusButton(docType, outerDocKey, innerDocKey, 'Reject');
-  const finishedButton = createStatusButton(docType, outerDocKey, innerDocKey, 'Finished');
-  const doneButton = createStatusButton(docType, outerDocKey, innerDocKey, 'Done');
+  const rejectButton = createStatusButton(docType, outerDocKey, innerDocKey, 'Pending');
+  const finishedButton = createStatusButton(docType, outerDocKey, innerDocKey, 'For Claiming');
+  const doneButton = createStatusButton(docType, outerDocKey, innerDocKey, 'Claimed');
 
   // Append buttons to actions bar
   actionsBar.appendChild(acceptButton);
@@ -234,16 +234,16 @@ function createStatusButton(docType, outerDocKey, innerDocKey, status) {
   button.classList.add('publish-btn');
 
   // Give the "Done" button a unique ID
-  if (status === 'Done') {
+  if (status === 'Claimed') {
     button.id = `${docType}_${outerDocKey}_${innerDocKey}_DoneButton`;
   }
 
   // Inside the createStatusButton function
 button.addEventListener('click', async () => {
   // Handle functionality for the "Done" button separately
-  if (status === 'Done') {
+  if (status === 'Claimed') {
     // Update document status to 'Done'
-    updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Done');
+    updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Claimed');
     
     // Move the corresponding row to the "Finished documents" table
     const row = document.getElementById(`${outerDocKey}_${innerDocKey}`);
@@ -285,6 +285,13 @@ button.addEventListener('click', async () => {
   return button;
 }
 
+
+
+
+
+
+
+
 function fetchFinishedDocuments() {
   const finishedDocumentsRef = ref(database, `FinishedDocuments`);
 
@@ -296,19 +303,23 @@ function fetchFinishedDocuments() {
 
     // Check if there is data in the snapshot
     if (snapshot.exists()) {
-      const documentIds = Object.keys(snapshot.val());
+      const documents = snapshot.val();
+      const documentIds = Object.keys(documents);
 
-      // Iterate through documentIds
+      // Sort documentIds based on timestamp from latest to oldest
+      documentIds.sort((a, b) => documents[b].timestamp - documents[a].timestamp);
+
+      // Iterate through sorted documentIds
       documentIds.forEach((docId) => {
-        const innerDocKeys = Object.keys(snapshot.val()[docId]);
+        const innerDocKeys = Object.keys(documents[docId]);
 
-        // Iterate through innerDocKeys
-        innerDocKeys.forEach((innerDocKey) => {
+        // Iterate through innerDocKeys in reverse order to display from latest to oldest
+        innerDocKeys.reverse().forEach((innerDocKey) => {
           // Append a new row to the table
           const row = table.insertRow();
 
           // Append cells to the row based on the document type
-          appendFinishedDocumentCells(row, snapshot.val()[docId][innerDocKey]);
+          appendFinishedDocumentCells(row, documents[docId][innerDocKey]);
         });
       });
     } else {
@@ -324,15 +335,21 @@ fetchFinishedDocuments();
 
 
 
+
+
+
+
+
+
 // Define the button
 const button = document.getElementById('doneDocumentsTable');
 
 // Inside the event listener for the "Done" button
 button.addEventListener('click', async () => {
   // Handle functionality for the "Done" button separately
-  if (status === 'Done') {
+  if (status === 'Claimed') {
     // Update document status to 'Done'
-    updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Done');
+    updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Claimed');
     
     // Move the corresponding row to the "Finished documents" table
     const row = document.getElementById(`${outerDocKey}_${innerDocKey}`);
@@ -389,13 +406,85 @@ window.onload = function () {
 // Define the "Done" button click event listener
 document.addEventListener('click', async (event) => {
   const target = event.target;
-  if (target.classList.contains('publish-btn') && target.textContent === 'Done') {
+  if (target.classList.contains('publish-btn') && target.textContent === 'Claimed') {
     const [docType, outerDocKey, innerDocKey] = target.id.split('_');
-    updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Done');
+    updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Claimed');
     moveDoneRowsToFinishedDocuments(docType);
     fetchFinishedDocuments(docType); // Ensure that fetchFinishedDocuments is called after updating the document status
   }
 });
+
+
+// JavaScript code to handle printing when the button is clicked
+document.getElementById('printButton').addEventListener('click', function() {
+  // Wait for the table data to be loaded
+  waitForDataToLoad().then(function() {
+    // Once data is loaded, trigger the print dialog
+    window.print();
+  });
+});
+
+
+
+
+
+
+
+function waitForTableData() {
+  return new Promise(function(resolve) {
+    const tableRows = document.querySelectorAll('#doneDocumentsTable tbody tr');
+    const tableVisible = document.getElementById('doneDocumentsTable').offsetHeight > 0;
+    if (tableRows.length > 0 && tableVisible) {
+      resolve();
+    } else {
+      setTimeout(function() {
+        waitForTableData().then(resolve);
+      }, 100);
+    }
+  });
+}
+
+document.getElementById('printButton').addEventListener('click', function() {
+  waitForTableData().then(function() {
+    // Load the content of printable.html
+    fetch('printable.html')
+      .then(response => response.text())
+      .then(html => {
+        // Create a hidden iframe
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        // Inject the table data into the content of printable.html
+        const iframeDocument = iframe.contentWindow.document;
+        iframeDocument.open();
+        iframeDocument.write(html);
+        const table = iframeDocument.getElementById('doneDocumentsTable');
+        const tableRows = document.querySelectorAll('#doneDocumentsTable tbody tr');
+        table.innerHTML = '';
+        tableRows.forEach(row => {
+          table.appendChild(row.cloneNode(true));
+        });
+        iframeDocument.close();
+
+        // Print the content of the iframe
+        iframe.onload = function() {
+          iframe.contentWindow.print();
+          setTimeout(function() {
+            document.body.removeChild(iframe);
+          }, 1000);
+        };
+      });
+  });
+});
+
+
+
+
+
+
+
+
 
 
 
@@ -405,9 +494,9 @@ const doneButton = document.getElementById(doneButtonId);
 // Add event listener to the "Done" button
 doneButton.addEventListener('click', async () => {
   // Handle functionality for the "Done" button separately
-  if (status === 'Done') {
+  if (status === 'Claimed') {
     // Update document status to 'Done'
-    updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Done');
+    updateDocumentStatus(docType, outerDocKey, innerDocKey, 'Claimed');
 
     // Move the corresponding row to the "Finished documents" table
     const row = document.getElementById(`${outerDocKey}_${innerDocKey}`);

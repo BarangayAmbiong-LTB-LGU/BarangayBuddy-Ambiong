@@ -1,0 +1,122 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 25px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border: 1px solid #d2d2d3;
+  border-radius: 5px;
+  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+  margin: 0 auto; 
+  max-width: 1000px; 
+}
+
+.card-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.card {
+  border-left: 7px solid #960019;
+}
+
+.card > span {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.card-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-inner > p {
+  font-size: 18px;
+}
+
+.card-inner > a {
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.card-inner > span {
+  font-size: 35px;
+}
+
+.card {
+  overflow: hidden;
+  height: 10; 
+  transition: height 0.3s ease;
+}
+
+.card-content table th,
+.card-content table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.card-content table th {
+  background-color: #f2f2f2;
+}
+
+.card.expanded {
+  height: auto;
+  border-left: 7px solid #a5aaad;
+}
+
+.card.expanded:hover {
+  background-color: #ffffff;
+}
+
+.header {
+  position: relative;
+  padding: 20px;
+}
+
+.logo {
+  width: 150px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  margin-right: 20px
+  
+}
+
+
+
+.Tittle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+}
+
+.Tittle p {
+  text-align: center;
+}
+
+
+@media print {
+  /* Hide elements not relevant for printing */
+  .main-title {
+    display: none;
+  }
+
+  /* Style the table for better readability on paper */
+  #doneDocumentsTable {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  #doneDocumentsTable th,
+  #doneDocumentsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  #doneDocumentsTable th {
+    background-color: #f2f2f2;
+  }
+}
