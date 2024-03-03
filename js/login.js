@@ -44,3 +44,14 @@ let signInUser = evt => {
 }
 
 loginForm.addEventListener('submit', signInUser);
+
+
+window.onload = function() {
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+        window.location.href = 'index.html'; // Redirect to dashboard page
+    }
+    // Other login page initialization code...
+};
+
+

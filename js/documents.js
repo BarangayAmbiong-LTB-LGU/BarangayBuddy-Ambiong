@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getDatabase, ref, onValue, set, remove  } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-
+import { getAuth, onAuthStateChanged, signOut  } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCGeVx4ZmZPMXjeBR71lHbxVy8i-4gD9uQ",
@@ -11,6 +11,28 @@ const firebaseConfig = {
   messagingSenderId: "107104492368",
   appId: "1:107104492368:web:8896aec25ca1838cefaa55"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+const database = getDatabase(app);
+
+
+// Initialize Firebase Authentication
+const auth = getAuth();
+
+
+
+
+// Logout function
+document.querySelector('.logout').addEventListener('click', function() {
+    signOut(auth).then(() => {
+        // User successfully signed out
+    }).catch((error) => {
+        // An error occurred while signing out
+        console.error('Error signing out:', error);
+    });
+});
 
 function moveDoneRowsToFinishedDocuments(docType) {
   if (typeof docType !== 'string') {
@@ -37,9 +59,9 @@ function moveDoneRowsToFinishedDocuments(docType) {
 }
 
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+
+// Reference to the finished documents
+const finishedDocumentsRef = ref(database, 'FinishedDocuments');
 
 export function updateDocumentStatus(docType, outerDocKey, innerDocKey, status) {
   if (status === 'Claimed') {
@@ -192,9 +214,9 @@ function appendFinishedDocumentCells(row, doc) {
   appendCell(row, doc.presentAddress || 'N/A');
   appendCell(row, doc.purpose || 'N/A');
   appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
-  appendCell(row, 'Done'); 
-
+  appendCell(row, 'Claimed'); 
 }
+
 
 
 function appendCell(row, text) {
@@ -291,48 +313,37 @@ button.addEventListener('click', async () => {
 
 
 
-
+// Fetch finished documents
 function fetchFinishedDocuments() {
-  const finishedDocumentsRef = ref(database, `FinishedDocuments`);
-
   onValue(finishedDocumentsRef, (snapshot) => {
     const table = document.getElementById('doneDocumentsTable').getElementsByTagName('tbody')[0];
-
-    // Clear existing table rows
-    table.innerHTML = '';
-
-    // Check if there is data in the snapshot
+    table.innerHTML = ''; // Clear existing table rows
     if (snapshot.exists()) {
       const documents = snapshot.val();
-      const documentIds = Object.keys(documents);
-
-      // Sort documentIds based on timestamp from latest to oldest
-      documentIds.sort((a, b) => documents[b].timestamp - documents[a].timestamp);
-
-      // Iterate through sorted documentIds
-      documentIds.forEach((docId) => {
-        const innerDocKeys = Object.keys(documents[docId]);
-
-        // Iterate through innerDocKeys in reverse order to display from latest to oldest
-        innerDocKeys.reverse().forEach((innerDocKey) => {
-          // Append a new row to the table
-          const row = table.insertRow();
-
-          // Append cells to the row based on the document type
-          appendFinishedDocumentCells(row, documents[docId][innerDocKey]);
+      // Flatten the documents into an array
+      const documentsArray = [];
+      Object.entries(documents).forEach(([userId, userDocuments]) => {
+        Object.entries(userDocuments).forEach(([docId, document]) => {
+          documentsArray.push(document);
         });
       });
+      // Sort documents by timestamp (latest to oldest)
+      documentsArray.sort((a, b) => b.time - a.time);
+      // Iterate through sorted documents
+      documentsArray.forEach(document => {
+        const row = table.insertRow();
+        appendFinishedDocumentCells(row, document);
+      });
     } else {
-      console.log(`No finished documents available`);
+      console.log('No finished documents available');
     }
   }, (error) => {
-    console.error(`Error fetching finished documents:`, error.message);
+    console.error('Error fetching finished documents:', error.message);
   });
 }
 
 // Call the fetchFinishedDocuments function to fetch all documents under FinishedDocuments
 fetchFinishedDocuments();
-
 
 
 
@@ -425,7 +436,30 @@ document.getElementById('printButton').addEventListener('click', function() {
 });
 
 
+// Listen for changes in authentication state
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+      // User is signed in
+      console.log('User is signed in');
+  } else {
+      // User is signed out
+      console.log('User is signed out');
+      // Clear any session tokens or flags
+      sessionStorage.setItem('isLoggedIn', 'false');
+      // Redirect the user to the login page
+      window.location.href = 'login.html';
+  }
+});
 
+// Logout function
+document.querySelector('.logout').addEventListener('click', function() {
+  signOut(auth).then(() => {
+      // User successfully signed out
+  }).catch((error) => {
+      // An error occurred while signing out
+      console.error('Error signing out:', error);
+  });
+});
 
 
 
@@ -459,12 +493,17 @@ document.getElementById('printButton').addEventListener('click', function() {
         const iframeDocument = iframe.contentWindow.document;
         iframeDocument.open();
         iframeDocument.write(html);
+
+        // Find the table in the iframe
         const table = iframeDocument.getElementById('doneDocumentsTable');
+
+        // Inject the table rows from the main document into the existing table
+        const tableBody = table.getElementsByTagName('tbody')[0];
         const tableRows = document.querySelectorAll('#doneDocumentsTable tbody tr');
-        table.innerHTML = '';
         tableRows.forEach(row => {
-          table.appendChild(row.cloneNode(true));
+          tableBody.appendChild(row.cloneNode(true));
         });
+        
         iframeDocument.close();
 
         // Print the content of the iframe
@@ -477,14 +516,6 @@ document.getElementById('printButton').addEventListener('click', function() {
       });
   });
 });
-
-
-
-
-
-
-
-
 
 
 
@@ -537,4 +568,9 @@ doneButton.addEventListener('click', async () => {
       break;
   }
 });
+
+
+
+
+
 

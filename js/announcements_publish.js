@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref as databaseRef, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+import { getAuth, onAuthStateChanged, signOut  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyCGeVx4ZmZPMXjeBR71lHbxVy8i-4gD9uQ",
     authDomain: "barangaybuddy.firebaseapp.com",
@@ -70,3 +72,30 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// Initialize Firebase Authentication
+const auth = getAuth();
+
+// Listen for changes in authentication state
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is signed in
+        console.log('User is signed in');
+    } else {
+        // User is signed out
+        console.log('User is signed out');
+        // Clear any session tokens or flags
+        sessionStorage.setItem('isLoggedIn', 'false');
+        // Redirect the user to the login page
+        window.location.href = 'login.html';
+    }
+});
+
+// Logout function
+document.querySelector('.logout').addEventListener('click', function() {
+    signOut(auth).then(() => {
+        // User successfully signed out
+    }).catch((error) => {
+        // An error occurred while signing out
+        console.error('Error signing out:', error);
+    });
+});

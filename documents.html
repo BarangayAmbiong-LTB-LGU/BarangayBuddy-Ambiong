@@ -35,9 +35,9 @@
   <i class="fas fa-search search-icon"></i> 
 </div>
 
-    <div class="header-right">
-      <a href="login.html" class="logout"><span class="material-icons-outlined">logout</span></a>
-    </div>
+<div class="header-right">
+  <a class="logout" id="logoutButton"><span class="material-icons-outlined">logout</span></a>
+</div>
 
   </header>
   <!-- End Header -->
@@ -206,39 +206,59 @@
       <div class="card" id="FinishedCard">
         <div class="FinishedCard">
 
-          <div class="dropdown">
+
+          <div class="dropdown document-type-dropdown">
             <button class="dropbtn">Filter</button>
             <div class="dropdown-content">
-                <a href="#" id="allCategory">All</a>
-                <a href="#" id="healthCategory">Barangay Clearance</a>
-                <a href="#" id="educationCategory">Business Clearance</a>
-                <a href="#" id="sportsCategory">Residency</a>
-                <a href="#" id="othersCategory">Others</a>
+                    <a href="#" id="allCategory">All</a>
+                    <a href="#" id="barangayClearanceCategory">Barangay Clearance</a>
+                    <a href="#" id="businessClearanceCategory">Business Clearance</a>
+                    <a href="#" id="residencyCategory">Residency</a>
+                    <a href="#" id="othersCategory">Others</a>
+                </div>
             </div>
-        </div>
+            <div class="dropdown month-dropdown">
+              <button class="dropbtn">Month</button>
+              <div class="dropdown-content">
+                <a href="#" id="ALL">All Time</a>
+                    <a href="#" id="januaryMonth">January</a>
+                    <a href="#" id="februaryMonth">February</a>
+                    <a href="#" id="marchMonth">March</a>
+                    <a href="#" id="aprilMonth">April</a>
+                    <a href="#" id="mayMonth">May</a>
+                    <a href="#" id="juneMonth">June</a>
+                    <a href="#" id="julyMonth">July</a>
+                    <a href="#" id="augustMonth">August</a>
+                    <a href="#" id="septemberMonth">September</a>
+                    <a href="#" id="octoberMonth">October</a>
+                    <a href="#" id="novemberMonth">November</a>
+                    <a href="#" id="decemberMonth">December</a>
+                </div>
+            </div>
 
-          <p class="font-weight-bold">Claimed documents</p>
-          <button class="publish-btn" id="printButton">Print Table</button>
+            <p class="font-weight-bold">Claimed documents</p>
+            <button class="publish-btn" id="printButton">Print Table</button>
         </div>
         <div class="card-content">
-          <table id="doneDocumentsTable" class="table-responsive">
-            <thead>
-              <tr>
-                <th>Document Type</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Date of Birth</th>
-                <th>Gender</th>
-                <th>Address</th>
-                <th>Purpose</th>
-                <th>Date & Time of Request</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+            <table id="doneDocumentsTable" class="table-responsive">
+                <thead>
+                    <tr>
+                        <th>Document Type</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Purpose</th>
+                        <th>Date & Time of Request</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-      </div>
+    </div>
+    
       
       
  
@@ -250,5 +270,6 @@
 
 <script src="./js/script.js"></script>
 <script type="module" src="js/documents.js"></script>
+<script type="module" src="js/documentFilter.js"></script>
 </body>
 </html>
