@@ -146,7 +146,7 @@ function appendFinishedDocumentCells(row, doc) {
                             <td>${presentAddress}</td>
                             <td>${purpose}</td>
                             <td>${timestamp}</td>
-                            <td class="status-cell">${document.status}</td>
+                            <td class="status-cell">Claimed</td>
                         `;
                         row.classList.add('document-row');
                         row.id = docId; // Set the row ID to the document ID
