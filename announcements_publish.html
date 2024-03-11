@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barangay Buddy | New Announcement</title>
+  <title>Publish Announcements</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -39,17 +39,6 @@
         <a href="reports_dashboard.html"><li class="sidebar-list-item"><span class="material-icons-outlined">poll</span> Manage Reports</li></a>
         <a href="suggestions.html"><li class="sidebar-list-item"><span class="material-icons-outlined">people</span> Barangay Residents Suggestions</li></a>
         <a href="announcements_history.html"><li class="sidebar-list-item"><span class="material-icons-outlined">campaign</span> Announcements</li></a>
-        <a href="ambiong_history.html">
-          <li class="sidebar-list-item">
-            <span class="material-icons-outlined">history_edu</span> Barangay Information
-          </li>
-        </a>
-
-        <a href="officials.html">
-          <li class="sidebar-list-item">
-            <span class="material-icons-outlined">gavel</span> Officials
-          </li>
-        </a>
       </ul>
     </aside>
     <main class="main-container">
@@ -60,6 +49,8 @@
         <div class="card">
           <div class="announcement-form">
             <form id="announcementForm" class="form">
+             
+              
               <label for="title" class="title">Title:</label>
               <input type="text" id="title" required>
               <label for="description" class="description">Description:</label>
@@ -68,10 +59,22 @@
               <div class="file-input-container">
                 <input type="file" id="image" accept="image/*" class="input-file">
               </div>
-
+      
               <br>
             
               <br>
+<!-- HTML -->
+<label for="category">Category:</label>
+<select id="category" required>
+  <option value="">Select a category</option>
+  <option value="Projects">Projects</option>
+  <option value="Programs">Programs</option>
+  <option value="Activities">Activities</option>
+</select>
+
+
+<br><br>
+
               <button type="submit" class="submit" onclick="showSuccessToast()">Post Announcement</button>
               <br>
               <br>
@@ -80,6 +83,7 @@
           </div>
         </div>
       </div>
+      
     </main>
   </div>
 
@@ -94,6 +98,9 @@
       Announcement successfully posted!
     </div>
   </div>
+
+
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>

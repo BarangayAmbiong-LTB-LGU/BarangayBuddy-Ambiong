@@ -659,5 +659,10 @@ body {
 }
 
 
-
+.status-column {
+ 
+  background-color: yellow; 
+  position: relative; 
+  z-index: 999;
+}
 

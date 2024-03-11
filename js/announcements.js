@@ -30,9 +30,20 @@ const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
 const database = getDatabase(firebaseApp);
 
-function uploadAnnouncement(title, description, imageFile) {
+document.getElementById('announcementForm').addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  const title = document.getElementById('title').value;
+  const description = document.getElementById('description').value;
+  const imageFile = document.getElementById('image').files[0];
+  const category = document.getElementById('category').value;
+
+  uploadAnnouncement(title, description, imageFile, category);
+});
+
+function uploadAnnouncement(title, description, imageFile, category) {
   const newAnnouncementKey = push(databaseRef(database, 'announcements')).key;
-  const timestamp = serverTimestamp();  // Use serverTimestamp here
+  const timestamp = serverTimestamp();
 
   const imageRef = storageRef(storage, `Announcements/${newAnnouncementKey}`);
   uploadBytes(imageRef, imageFile).then(() => {
@@ -42,9 +53,9 @@ function uploadAnnouncement(title, description, imageFile) {
         description: description,
         imageUrl: imageUrl,
         timestamp: timestamp,
+        category: category // Include the category in the announcement object
       };
 
-      // Use set instead of push to set the data at the specified path
       set(databaseRef(database, `announcements/${newAnnouncementKey}`), newAnnouncement);
 
       console.log('Announcement uploaded successfully!');
@@ -56,15 +67,10 @@ function uploadAnnouncement(title, description, imageFile) {
   });
 }
 
-document.getElementById('announcementForm').addEventListener('submit', function (event) {
-  event.preventDefault();
 
-  const title = document.getElementById('title').value;
-  const description = document.getElementById('description').value;
-  const imageFile = document.getElementById('image').files[0];
 
-  uploadAnnouncement(title, description, imageFile);
-});
+
+
 
 // Initialize Firebase Authentication
 const auth = getAuth();

@@ -1,7 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getDatabase, ref, get, query, orderByChild, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-import { getAuth, onAuthStateChanged, signOut  } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,8 +18,23 @@ const app = initializeApp(firebaseConfig);
 // Firebase Realtime Database
 const database = getDatabase(app);
 
+// Global variable to store all announcements
+let allAnnouncements = [];
 
+// Function to fetch all announcements from the database
+function getAllAnnouncements() {
+  const announcementsRef = ref(database, 'announcements');
+  onValue(announcementsRef, (snapshot) => {
+    if (snapshot.exists()) {
+      allAnnouncements = Object.values(snapshot.val());
+    } else {
+      console.log('No announcements found');
+    }
+  });
+}
 
+// Call the function to fetch all announcements when the page loads
+getAllAnnouncements();
 
 // Function to display announcements
 function displayAnnouncements(announcements) {
@@ -59,16 +72,16 @@ function displayAnnouncements(announcements) {
     description.textContent = announcement.description;
     card.appendChild(description);
 
-    // Display category
-    const category = document.createElement('p');
-    category.textContent = `Category: ${announcement.category}`;
-    card.appendChild(category);
-
     // Add two line breaks for extra space
     const lineBreak1 = document.createElement('br');
     const lineBreak2 = document.createElement('br');
     card.appendChild(lineBreak1);
     card.appendChild(lineBreak2);
+
+    // Display category
+    const category = document.createElement('p');
+    category.textContent = `Category: ${announcement.category}`;
+    card.appendChild(category);
 
     // Display timestamp
     const timestamp = document.createElement('p');
@@ -81,56 +94,30 @@ function displayAnnouncements(announcements) {
   });
 }
 
-
-
-// Function to fetch announcements from the database and listen for real-time updates
-function listenForAnnouncements() {
-  const announcementsRef = ref(database, 'announcements');
-  const orderedAnnouncements = query(announcementsRef, orderByChild('timestamp'));
-
-  // Listen for changes in the data
-  onValue(orderedAnnouncements, (snapshot) => {
-    if (snapshot.exists()) {
-      const announcements = Object.values(snapshot.val());
-      // Reverse the order of announcements to display newest first
-      displayAnnouncements(announcements.reverse());
-    } else {
-      console.log('No announcements found');
-    }
-  });
+// Function to filter announcements by category locally
+function filterAnnouncementsByCategoryLocally(category) {
+  return allAnnouncements.filter(announcement => announcement.category === category);
 }
 
-// Fetch and display announcements on page load
-listenForAnnouncements();
-
-
-
-
-
-// Initialize Firebase Authentication
-const auth = getAuth();
-
-// Listen for changes in authentication state
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in
-        console.log('User is signed in');
-    } else {
-        // User is signed out
-        console.log('User is signed out');
-        // Clear any session tokens or flags
-        sessionStorage.setItem('isLoggedIn', 'false');
-        // Redirect the user to the login page
-        window.location.href = 'login.html';
-    }
+// Add event listeners to category links in the dropdown menu
+document.getElementById('allCategory').addEventListener('click', function() {
+  displayAnnouncements(allAnnouncements);
 });
 
-// Logout function
-document.querySelector('.logout').addEventListener('click', function() {
-    signOut(auth).then(() => {
-        // User successfully signed out
-    }).catch((error) => {
-        // An error occurred while signing out
-        console.error('Error signing out:', error);
-    });
+document.getElementById('Projects').addEventListener('click', function() {
+  const category = 'Projects';
+  const filteredAnnouncements = filterAnnouncementsByCategoryLocally(category);
+  displayAnnouncements(filteredAnnouncements);
+});
+
+document.getElementById('Programs').addEventListener('click', function() {
+  const category = 'Programs';
+  const filteredAnnouncements = filterAnnouncementsByCategoryLocally(category);
+  displayAnnouncements(filteredAnnouncements);
+});
+
+document.getElementById('Activities').addEventListener('click', function() {
+  const category = 'Activities';
+  const filteredAnnouncements = filterAnnouncementsByCategoryLocally(category);
+  displayAnnouncements(filteredAnnouncements);
 });

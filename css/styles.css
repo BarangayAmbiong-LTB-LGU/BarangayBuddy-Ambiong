@@ -147,10 +147,6 @@ body {
     grid-area: main;
     overflow-y: auto;
     padding: 20px 20px;
-    background-image: url('../images/background.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
   }
   
   .main-title {
@@ -160,7 +156,6 @@ body {
   
   .main-title > p {
     font-size: 30px;
-    color: #fff;
   }
   
   .main-cards {
@@ -229,30 +224,7 @@ body {
   .card-inner > span {
     font-size: 35px;
   }
-
-  .card-inner-hotline {
-    display: flex;
-    flex-direction: row; /* Change flex direction to row */
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Add space between items */
-    text-align: center; /* Align all text to center */
-  }
   
-  .card-inner-hotline h3,
-  .card-inner-hotline p {
-    display: inline; /* Change display to inline */
-    margin: 0; /* Remove default margin */
-  }
-  
-  .card-inner-hotline h3 {
-    margin-right: auto; /* Add some spacing between h3 and p */
-  }
-  
-  .card-inner-hotline p {
-    text-align: auto;
-    margin-left: auto;
-  }
-
   .side-container {
     grid-area: main;
     overflow-y: auto;
@@ -269,20 +241,8 @@ body {
     border: 1px solid #d2d2d3;
     border-radius: 5px;
     box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-
-  .side-card img{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
   }
   
-  .background-image {
-    width: 600px;
-    margin-bottom: 20px;
-  }
-
   /* ---------- SCROLLBARS ---------- */
   
   ::-webkit-scrollbar {
