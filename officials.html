@@ -3,22 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Barangay Buddy | Suggestions</title>
+    <title>Barangay Buddy | Officials</title>
 
-    <!-- Montserrat Font -->
+     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/suggestions.css">
-
-
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-
+    <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
     <div class="grid-container">
@@ -33,10 +27,11 @@
             <p class="text-primary">Home</p>
           </a>
         </div>
+
         <div class="header-right">
           <a class="logout" id="logoutButton"><span class="material-icons-outlined">logout</span></a>
-      </div>
-      
+        </div>
+
       </header>
       <!-- End Header -->
 
@@ -45,7 +40,7 @@
         <div class="sidebar-title">
           <div class="sidebar-brand" >
             <a href="index.html">
-            <span class="material-icons-outlined" >location_city</span>  Barangay Buddy
+            <span class="material-icons-outlined">location_city</span>  Barangay Buddy
             </a>
           </div>
           <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
@@ -91,50 +86,46 @@
       <!-- Main -->
       <main class="main-container">
         <div class="main-title">
-            <p class="font-weight-bold">Suggestions</p>
+          <p class="font-weight-bold">Officials</p>
         </div>
-    
-        <div class="dropdown">
-            <button class="dropbtn">Filter Suggestions</button>
-            <div class="dropdown-content">
-                <a href="#" id="allCategory">All</a>
-                <a href="#" id="healthCategory">Health</a>
-                <a href="#" id="educationCategory">Education</a>
-                <a href="#" id="sportsCategory">Sports</a>
-                <a href="#" id="barangayImprovementsCategory">Barangay Improvements</a>
-                <a href="#" id="othersCategory">Others</a>
+
+        <section class="side-container">
+          <div class="side-card">
+
+            <div class="card-inner">
+              <p>
+                Long time ago, Barangay Ambiong was part of a vast land in La Trinidad
+                . However, it got noi name during thoise times until settlers form Kabayan,
+                Ambaurayan, Ampusongan and Kibungan of Benguet came. Majority of the natives
+                who settled in the area were the Ibalois and Kankanaeys. The term Ambiong originally
+                came from the ibaloi word "AMBIONGAN" which generally means "BLACK CARPET BEES". 
+                These bees were often found in the rolling hills and forests where wild flowers
+                and the thick foliage used to abound. They also make their shelters by drilling 
+                through the trunk of dead trees. Ambiong was predominantly a thick lush, rich flora, and 
+                fauna up until the 1960s. For a long time, befiore the modern era, the area was purposely
+                for hunting and food gathering activities.
+              </p>
             </div>
-        </div>
 
-        <br>
-        <br>
-        <br>
-
-    
-        <div class="card" id="suggestionsTable">
-          <div class="card-content">
-            <table id="Suggestions" class="table-responsive">
-              <thead>
-                <tr>
-                  <th style="width: 25%;">Category</th>
-                  <th style="width: 25%;">From</th>
-                  <th style="width: 35%;">Suggestion</th>
-                  <th style="width: 15%;">Date Posted</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
+            <div class="card-inner">
+              <p>
+                Generally, The barangay was a part of Barangay Eastern Pico but it was seperated in 
+                1984 by virute of Presidential Decree (P.D.) No. 3590 and P.D. No. 557. Since then, it was
+                called BARANGAY AMBIONG
+              </p>
+            </div>
           </div>
-        </div>
+        </section>
+      </main>
+      
+      
+      <!-- End Main -->
 
-        
-    </main>
-    
-     
-   
+    </div>
 
+    <!-- Scripts -->
+    <!-- Custom JS -->
     <script src="js/script.js"></script>
-    <script type="module" src="js/suggestions.js"></script>
+    <script type="module" src="js/index.js"></script>
   </body>
-  
 </html>
