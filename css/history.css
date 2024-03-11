@@ -212,13 +212,20 @@ body {
   }
   
   .card-inner {
-    display: flex;
+    display:flex;
     align-items: center;
     justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .card-inner-map {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
   }
   
   .card-inner > p {
     font-size: 18px;
+    margin-bottom: 20px;
   }
   
   .card-inner > span {
@@ -244,8 +251,18 @@ body {
   }
   
   .background-image {
-    width: 600px;
+    padding: 20px;
+    width: 500px;
     margin-bottom: 20px;
+  }
+
+  .background-image-2 {
+    padding: 20px;
+    width: 500px;
+  }
+
+  .background-image-3 {
+    width: 100%;
   }
 
   /* ---------- SCROLLBARS ---------- */
