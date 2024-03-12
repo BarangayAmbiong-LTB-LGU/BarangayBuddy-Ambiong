@@ -230,28 +230,9 @@ body {
     font-size: 35px;
   }
 
-  .card-inner-hotline {
-    display: flex;
-    flex-direction: row; /* Change flex direction to row */
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Add space between items */
-    text-align: center; /* Align all text to center */
-  }
-  
-  .card-inner-hotline h3,
-  .card-inner-hotline p {
-    display: inline; /* Change display to inline */
-    margin: 0; /* Remove default margin */
-  }
-  
-  .card-inner-hotline h3 {
-    margin-right: auto; /* Add some spacing between h3 and p */
-  }
-  
-  .card-inner-hotline p {
-    text-align: auto;
-    margin-left: auto;
-  }
+ .contacts {
+  width: 1000px;
+ }
 
   .side-container {
     grid-area: main;
