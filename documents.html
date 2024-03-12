@@ -108,6 +108,7 @@
           <a href="#barangayClearanceCard"><li>Barangay Clearance</li></a>
           <a href="#businessClearanceCard"><li>Business Clearance</li></a>
           <a href="#ResidencyCard"><li>Residency</li></a>
+          <a href="#indegencyCard"><li>Indigency</li></a>
           <a href="#othersCard"><li>Others</li></a>
           <a href="#FinishedCard"><li>Finished Documents</li></a>
         </ul>
@@ -128,9 +129,11 @@
                 <th>Date of Birth</th>
                 <th>Gender</th>
                 <th>Address</th>
+                <th>Time Of Recidency</th>
                 <th>Purpose</th>
+                <th>Cedula</th>
                 <th>Date & Time of Request</th>
-                <th>Status</th>
+                <th class="stat">Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -149,10 +152,15 @@
               <tr>
                 <th>Name Of Business</th>
                 <th>Name Of Owner</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Date of Birth</th>
                 <th>Address of Business</th>
                 <th>Type of Business</th>
+                <th>Cedula</th>
+                <th>Time Of Recidency</th>
                 <th>Date & Time of Request</th>
-                <th>Status</th>
+                <th class="stat">Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -175,9 +183,10 @@
                 <th>Date of Birth</th>
                 <th>Civil Status</th>
                 <th>Address</th>
-                <th>Duration</th>
+                <th>Time Of Recidency</th>
+                <th>Cedula</th>
                 <th>Date & Time of Request</th>
-                <th>Status</th>
+                <th class="stat">Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -185,6 +194,34 @@
           </table>
         </div>
       </div>
+
+      <div class="card" id="indegencyCard">
+        <div class="main-title">
+          <p class="font-weight-bold">Indegency</p>
+        </div>
+        <div class="card-content">
+          <table id="residentsIndegency" class="table-responsive">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Civil Status</th>
+                <th>Date of Birth</th>
+                <th>Time Of Recidency</th>
+                <th>Phone number</th>
+                <th>Cedula</th>
+                <th>Date & Time of Request</th>
+                <th class="stat">Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
 
       <div class="card" id="othersCard">
         <div class="main-title">
@@ -202,8 +239,10 @@
                 <th>Date of Birth</th>
                 <th>Document Type</th>
                 <th>Purpose</th>
+                <th>Time of Recidency</th>
+                <th>Cedula</th>
                 <th>Date & Time of Request</th>
-                <th>Status</th>
+                <th class="stat">Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -226,6 +265,7 @@
                     <a href="#" id="barangayClearanceCategory">Barangay Clearance</a>
                     <a href="#" id="businessClearanceCategory">Business Clearance</a>
                     <a href="#" id="residencyCategory">Residency</a>
+                    <a href="#" id="IndegencyCategory">Indigency</a>
                     <a href="#" id="othersCategory">Others</a>
                 </div>
             </div>
@@ -263,7 +303,7 @@
                         <th>Address</th>
                         <th>Purpose</th>
                         <th>Date & Time of Request</th>
-                        <th>Status</th>
+                        <th class="stat">Status</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
