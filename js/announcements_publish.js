@@ -20,15 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const announcementList = document.getElementById('announcementList');
   const imageInput = document.getElementById('image');
   const imagePreview = document.getElementById('imagePreview');
-  const announcementForm = document.getElementById('announcementForm');
-  const categorySelect = document.getElementById('categorySelect');
-  const selectedCategoryInput = document.getElementById('selectedCategory');
 
-  categorySelect.addEventListener('change', () => {
-    const selectedCategory = categorySelect.value;
-    selectedCategoryInput.value = selectedCategory;
-    console.log('Selected category:', selectedCategory);
-  });
 
   imageInput.addEventListener('change', previewImage);
 
@@ -75,61 +67,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
   announcementForm.addEventListener('submit', (e) => {
     e.preventDefault(); // Prevent form submission
-    
-    // Get form input values
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const category = selectedCategoryInput.value; // Get the selected category
-    console.log('Title:', title);
-    console.log('Description:', description);
-    console.log('Category:', category);
-
-    // Create a new announcement object with the category included
-    const newAnnouncement = {
-        title: title,
-        description: description,
-        category: category
-    };
-    console.log('New announcement:', newAnnouncement);
-
-    // Push the new announcement data to Firebase under the specified category
-    const newAnnouncementRef = push(databaseRef(database, 'announcements/' + category), newAnnouncement);
-    const announcementId = newAnnouncementRef.key; // Get the generated key for the new announcement
-    console.log('Announcement ID:', announcementId);
-
-    showSuccessToast(); // Assuming this function shows a success message
+    showSuccessToast();
+  });
 });
 
 
+// Initialize Firebase Authentication
+const auth = getAuth();
 
+// Listen for changes in authentication state
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is signed in
+        console.log('User is signed in');
+    } else {
+        // User is signed out
+        console.log('User is signed out');
+        // Clear any session tokens or flags
+        sessionStorage.setItem('isLoggedIn', 'false');
+        // Redirect the user to the login page
+        window.location.href = 'login.html';
+    }
+});
 
-  
-
-  // Initialize Firebase Authentication
-  const auth = getAuth();
-
-  // Listen for changes in authentication state
-  onAuthStateChanged(auth, (user) => {
-      if (user) {
-          // User is signed in
-          console.log('User is signed in');
-      } else {
-          // User is signed out
-          console.log('User is signed out');
-          // Clear any session tokens or flags
-          sessionStorage.setItem('isLoggedIn', 'false');
-          // Redirect the user to the login page
-          window.location.href = 'login.html';
-      }
-  });
-
-  // Logout function
-  document.querySelector('.logout').addEventListener('click', function() {
-      signOut(auth).then(() => {
-          // User successfully signed out
-      }).catch((error) => {
-          // An error occurred while signing out
-          console.error('Error signing out:', error);
-      });
-  });
+// Logout function
+document.querySelector('.logout').addEventListener('click', function() {
+    signOut(auth).then(() => {
+        // User successfully signed out
+    }).catch((error) => {
+        // An error occurred while signing out
+        console.error('Error signing out:', error);
+    });
 });

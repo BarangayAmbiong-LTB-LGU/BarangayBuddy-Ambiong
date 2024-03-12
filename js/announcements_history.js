@@ -59,11 +59,6 @@ function displayAnnouncements(announcements) {
     description.textContent = announcement.description;
     card.appendChild(description);
 
-    // Display category
-    const category = document.createElement('p');
-    category.textContent = `Category: ${announcement.category}`;
-    card.appendChild(category);
-
     // Add two line breaks for extra space
     const lineBreak1 = document.createElement('br');
     const lineBreak2 = document.createElement('br');
@@ -80,8 +75,6 @@ function displayAnnouncements(announcements) {
     mainCards.appendChild(card);
   });
 }
-
-
 
 // Function to fetch announcements from the database and listen for real-time updates
 function listenForAnnouncements() {

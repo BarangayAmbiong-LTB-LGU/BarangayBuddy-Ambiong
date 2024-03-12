@@ -101,14 +101,9 @@ function appendFinishedDocumentCells(row, doc) {
       displayDocumentsByStatus('Business Clearance');
   });
   
-  document.getElementById('IndegencyCategory').addEventListener('click', function() {
-    displayDocumentsByStatus('Certificate of Indigency');
-});
-
-
   document.getElementById('residencyCategory').addEventListener('click', function() {
-    displayDocumentsByStatus('Certificate of Residency');
-});
+      displayDocumentsByStatus('Certificate of Residency');
+  });
   
   document.getElementById('othersCategory').addEventListener('click', function() {
       displayDocumentsByStatus('Other Document');

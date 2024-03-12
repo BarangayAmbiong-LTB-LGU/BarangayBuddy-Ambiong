@@ -24,8 +24,6 @@ const auth = getAuth();
 
 
 
-
-
 // Logout function
 document.querySelector('.logout').addEventListener('click', function() {
     signOut(auth).then(() => {
@@ -59,10 +57,6 @@ function moveDoneRowsToFinishedDocuments(docType) {
     });
   });
 }
-
-
-
-
 
 
 
@@ -135,8 +129,6 @@ reversedDocEntries.forEach(([outerDocKey, outerDoc]) => {
       appendBusinessClearanceCells(row, innerDoc);
     } else if (docType === 'Residency') {
       appendResidencyCells(row, innerDoc);
-    } else if (docType === 'Indigency') {
-      appendIndigency(row, innerDoc);
     } else if (docType === 'Others') {
       appendOthersCells(row, innerDoc);
     } else {
@@ -161,7 +153,6 @@ moveDoneRowsToFinishedDocuments(table);
 }
 
 
-
 function appendBarangayClearanceCells(row, doc) {
   // Append cells to the row based on the document type
   appendCell(row, doc.fullName || 'N/A');
@@ -169,28 +160,20 @@ function appendBarangayClearanceCells(row, doc) {
   appendCell(row, doc.dateOfBirth || 'N/A');
   appendCell(row, doc.gender || 'N/A');
   appendCell(row, doc.presentAddress || 'N/A');
-  appendCell(row, doc.duration || 'N/A');
   appendCell(row, doc.purpose || 'N/A');
-  appendCell(row, doc.hasCedula ? 'Available' : 'N/A');
   appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
-  appendCellStat(row, doc.status || 'N/A', 'status-column');
-  
+  appendCell(row, doc.status || 'N/A');
   
 }
 
 function appendBusinessClearanceCells(row, doc) {
   // Append cells to the row based on the document type
   appendCell(row, doc.nameOfBussiness || 'N/A');
-  appendCell(row, doc.fullName || 'N/A');
-  appendCell(row, doc.gender || 'N/A');
-  appendCell(row, doc.age || 'N/A');
-  appendCell(row, doc.dateOfBirth || 'N/A');
+  appendCell(row, doc.fullname || 'N/A');
   appendCell(row, doc.businessAddress || 'N/A');
   appendCell(row, doc.typeOfBusiness || 'N/A');
-  appendCell(row, doc.hasCedula ? 'Available' : 'N/A');
-  appendCell(row, doc.duration || 'N/A');
   appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
-  appendCellStat(row, doc.status || 'N/A', 'status-column');
+  appendCell(row, doc.status || 'N/A');
 }
 
 function appendResidencyCells(row, doc) {
@@ -200,28 +183,11 @@ function appendResidencyCells(row, doc) {
   appendCell(row, doc.gender || 'N/A');
   appendCell(row, doc.dateOfBirth || 'N/A');
   appendCell(row, doc.civilStatus || 'N/A');
-  appendCell(row, doc.address    || 'N/A');
-  appendCell(row, doc.duration || 'N/A');
-  appendCell(row, doc.hasCedula ? 'Available' : 'N/A');
-  appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
-  appendCellStat(row, doc.status || 'N/A', 'status-column');
-}
-
-function appendIndigency(row, doc) {
-  // Append cells to the row based on the document type
-  appendCell(row, doc.fullName || 'N/A');
-  appendCell(row, doc.age || 'N/A');
-  appendCell(row, doc.gender || 'N/A');
   appendCell(row, doc.address || 'N/A');
-  appendCell(row, doc.civilStatus || 'N/A');
-  appendCell(row, doc.dateOfBirth || 'N/A');
   appendCell(row, doc.duration || 'N/A');
-  appendCell(row, doc.indigencyPhoneNumber || 'N/A');
-  appendCell(row, doc.hasCedula ? 'Available' : 'N/A');
   appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
-  appendCellStat(row, doc.status || 'N/A', 'status-column');
+  appendCell(row, doc.status || 'N/A');
 }
-
 
 function appendOthersCells(row, doc) {
   // Append cells to the row based on the document type
@@ -231,12 +197,10 @@ function appendOthersCells(row, doc) {
   appendCell(row, doc.address || 'N/A');
   appendCell(row, doc.civilStatus || 'N/A');
   appendCell(row, doc.dateOfBirth || 'N/A');
-  appendCell(row, doc.inputDocumentType || 'N/A');
-  appendCell(row, doc.purpose|| 'N/A');
+  appendCell(row, doc.documentType || 'N/A');
   appendCell(row, doc.duration || 'N/A');
-  appendCell(row, doc.hasCedula ? 'Available' : 'N/A');
   appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
-  appendCellStat(row, doc.status || 'N/A', 'status-column');
+  appendCell(row, doc.status || 'N/A');
 }
 
 
@@ -249,27 +213,8 @@ function appendFinishedDocumentCells(row, doc) {
   appendCell(row, doc.gender || 'N/A');
   appendCell(row, doc.presentAddress || 'N/A');
   appendCell(row, doc.purpose || 'N/A');
-  appendCell(row, doc.hasCedula ? 'Available' : 'N/A');
   appendCell(row, doc.time ? new Date(doc.time).toLocaleDateString() : 'Invalid Date');
   appendCell(row, 'Claimed'); 
-}
-
-function appendCellStat(row, text, highlight) {
-  // Append a new cell to the row
-  const cell = row.insertCell();
-  const textNode = document.createTextNode(text);
-  const span = document.createElement('span');
-  span.appendChild(textNode);
-  if (highlight) {
-    const mark = document.createElement('mark');
-    mark.style.backgroundColor = 'yellow'; // Set background color
-    mark.style.position = 'relative'; // Set position
-    mark.style.zIndex = '999'; // Set z-index
-    mark.appendChild(span);
-    cell.appendChild(mark);
-  } else {
-    cell.appendChild(span);
-  }
 }
 
 
@@ -302,8 +247,6 @@ function appendButtonsToRow(row, docType, outerDocKey, innerDocKey, innerDoc) {
   // Append actions bar to action cell
   actionCell.appendChild(actionsBar);
 }
-
-
 
 
 
@@ -363,7 +306,6 @@ button.addEventListener('click', async () => {
 
   return button;
 }
-
 
 
 
@@ -468,7 +410,6 @@ window.onload = function () {
   displayDocuments('Barangay Clearance', 'residentsBarangayClearance');
   displayDocuments('Business Clearance', 'residentsBusinessClearance');
   displayDocuments('Residency', 'residentsResidency');
-  displayDocuments('Indigency', 'residentsIndegency');
   displayDocuments('Others', 'residentsOthers');
 };
 
@@ -519,8 +460,6 @@ document.querySelector('.logout').addEventListener('click', function() {
       console.error('Error signing out:', error);
   });
 });
-
-
 
 
 

@@ -28,6 +28,7 @@ const propertyTitles = {
   reportType: 'Report Type',
   phoneNumber: 'Phone number'
 };
+
 function displayReports() {
     onValue(reportsRef, (snapshot) => {
         const reportsTable = document.getElementById('reports');
@@ -35,41 +36,41 @@ function displayReports() {
         // Clear existing reports and headers
         reportsTable.innerHTML = '';
 
-        // Add column titles
-        const tableHeaders = `
-            <tr>
-                <th>Name of Resident</th>
-                <th>Current Location</th>
-                <th>Report</th>
-                <th>Report Type</th>
-                <th>Phone Number</th>
-                <th>Date and Time of Incident</th>
-            </tr>
-        `;
-        reportsTable.innerHTML += tableHeaders;
-
         // Check if snapshot exists and has data
         if (snapshot.exists() && snapshot.val()) {
-            // Convert the snapshot to an object containing user IDs as keys
-            const users = snapshot.val();
+            // Convert the snapshot to an object containing client IDs as keys
+            const clientReports = snapshot.val();
 
-            // Iterate over each user
-            Object.keys(users).forEach((userId) => {
-                const userReports = users[userId];
+            // Get an array of client IDs in reverse order
+            const clientIds = Object.keys(clientReports).reverse();
 
-                // Iterate over each report for the current user
-                Object.values(userReports).forEach((report) => {
+            // Iterate over each client's reports in reverse order
+            clientIds.forEach((clientId) => {
+                const client = clientReports[clientId];
+                const reportIds = Object.keys(client).reverse(); // Get an array of report IDs in reverse order
+
+                // Iterate over each report for the current client in reverse order
+                reportIds.forEach((reportId) => {
+                    const report = client[reportId];
                     // Format timestamp
                     const timestamp = new Date(report.timeStamp).toLocaleString();
+
+                    // Add table headers before the first report
+                    if (reportId === reportIds[0]) {
+                        const reportKeys = Object.keys(report).filter(key => key !== 'resId' && key !== 'timeStamp');
+                        const tableHeaders = `
+                            <tr>
+                                ${reportKeys.map(key => `<th>${propertyTitles[key]}</th>`).join('')}
+                                <th>Date and Time of Incident</th>
+                            </tr>
+                        `;
+                        reportsTable.innerHTML += tableHeaders;
+                    }
 
                     // Create table row for the report
                     const reportHtml = `
                         <tr>
-                            <td>${report.resName}</td>
-                            <td>${report.resCurLoc}</td>
-                            <td>${report.resReport}</td>
-                            <td>${report.reportType}</td>
-                            <td>${report.phoneNumber}</td>
+                            ${Object.keys(report).filter(key => key !== 'resId' && key !== 'timeStamp').map(key => `<td>${report[key]}</td>`).join('')}
                             <td>${timestamp}</td>
                         </tr>
                     `;
@@ -78,11 +79,10 @@ function displayReports() {
             });
         } else {
             // Display a message if there are no reports
-            reportsTable.innerHTML += '<tr><td colspan="6">No reports available</td></tr>';
+            reportsTable.innerHTML = '<tr><td colspan="4">No reports available</td></tr>';
         }
     });
 }
-
 
 
 // Execute the countReports and displayReports functions when the window is loaded

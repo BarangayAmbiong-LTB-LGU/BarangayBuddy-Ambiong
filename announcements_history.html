@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Announcements History</title>
+    <title>Barangay Buddy | Announcement History</title>
 
     <!-- Montserrat Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -76,6 +76,18 @@
             </li>
           </a>
 
+          <a href="ambiong_history.html">
+            <li class="sidebar-list-item">
+              <span class="material-icons-outlined">history_edu</span> Barangay Information
+            </li>
+          </a>
+
+          <a href="officials.html">
+            <li class="sidebar-list-item">
+              <span class="material-icons-outlined">gavel</span> Officials
+            </li>
+          </a>
+          
         </ul>
 
       </aside>
@@ -90,25 +102,22 @@
           <div class="button-container">
             <a href="announcements_publish.html"> <button class="publish-btn">New Announcement</button></a>
           </div>
+          <br>
+          <div class="dropdown">
+            <button class="dropbtn">Filter</button>
+            <div class="dropdown-content">
+                <a href="#" id="allCategory">All</a>
+                <a href="#" id="healthCategory">Health</a>
+                <a href="#" id="educationCategory">Education</a>
+                <a href="#" id="sportsCategory">Sports</a>
+                <a href="#" id="barangayImprovementsCategory">Barangay Improvements</a>
+                <a href="#" id="othersCategory">Others</a>
+            </div>
+        </div>
 
         <h3>Past Announcement: </h3>
-
-        <div class="dropdown">
-          <button class="dropbtn">Filter Suggestions</button>
-          <div class="dropdown-content">
-            <a href="#" id="allCategory">All</a>
-            <a href="#" id="Projects">Projects</a>
-            <a href="#" id="Programs">Programs</a>
-            <a href="#" id="Activities">Activities</a>
-          </div>
-        </div>
-        
-
-
-
         <div class="main-cards">
 
-          
           <a href="#">
             <div >
               <div class="card-inner" >
@@ -127,6 +136,5 @@
     <!-- Custom JS -->
     <script src="js/script.js"></script>
     <script type="module" src="js/announcements_history.js"></script>
-    <script type="module" src="js/announ_hist.js"></script>
   </body>
 </html>
