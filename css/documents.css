@@ -506,7 +506,8 @@ body {
   #residentsBarangayClearance th,
   #residentsBusinessClearance th,
   #residentsResidency th,
-  #residentsOthers th {
+  #residentsOthers th,
+  #residentsIndegency th {
     color: white; 
     background-color: #960019; 
     padding: 10px;
@@ -548,7 +549,7 @@ body {
 }
 
  /* Dropdown Button */
- .dropbtn {
+  .dropbtn {
   background-color: #960019;
   color: white;
   padding: 16px;
