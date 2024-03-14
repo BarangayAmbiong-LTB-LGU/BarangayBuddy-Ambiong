@@ -107,39 +107,41 @@
           <h1 style="font-size: 24px; text-align: right;">Total reports: </h1>
       </div>
 
+      <br>
+      <br>
+
       <div class="dropdown">
         <button class="dropbtn">Filter Reports</button>
         <div class="dropdown-content">
             <a href="#" id="allCategory">All</a>
-            <a href="#" id="healthCategory">Health</a>
-            <a href="#" id="educationCategory">Education</a>
-            <a href="#" id="sportsCategory">Sports</a>
-            <a href="#" id="barangayImprovementsCategory">Barangay Improvements</a>
-            <a href="#" id="othersCategory">Others</a>
+            <a href="#" id="IncidentCategory">Incident Report</a>
+            <a href="#" id="NoiseCategory">Noise Complaint</a>
+            <a href="#" id="LostCategory">Lost and Found Report</a>
+            <a href="#" id="CommunitysCategory">Community Report</a>
+            <a href="#" id="NaturalCategory">Natural Disaster Incident Report</a>
         </div>
     </div>
       
 
         <div class="main-cards">
+
           <div class="card">
+            <button class="publish-btn" id="printButton">Print Table</button>
             <table id="reports">
-              <tr>
-                <th>Name of Resident</th>
-                <th>Phone Number</th>
-                <th>Report</th>
-                <th>Description of Report</th>
-                <th>Date and Time of Incident</th>
-                
-              </tr>
-              <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-                <td>Date and Time yoo</td>
-              </tr>
-            </table>
-            </div>
-          </div>
+              <thead>
+                  <tr>
+                      <th>Name of Resident</th>
+                      <th>Phone Number</th>
+                      <th>Report</th>
+                      <th>Description of Report</th>
+                      <th>Current Location</th>
+                      <th>Date and Time of Incident</th>
+                  </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+          </table>
 
 
       </main>
