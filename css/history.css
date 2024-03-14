@@ -265,6 +265,12 @@ body {
     width: 100%;
   }
 
+  .background-image-4 {
+    width: 1000px;
+    margin: auto;
+    padding-left: auto;
+  }
+
   /* ---------- SCROLLBARS ---------- */
   
   ::-webkit-scrollbar {
