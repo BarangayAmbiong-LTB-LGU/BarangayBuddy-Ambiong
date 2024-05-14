@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
-// Your web app's Firebase configuration
+
 const firebaseConfig = {
   apiKey: "AIzaSyCGeVx4ZmZPMXjeBR71lHbxVy8i-4gD9uQ",
   authDomain: "barangaybuddy.firebaseapp.com",
@@ -34,7 +34,7 @@ let signInUser = evt => {
             console.log('Logged in:', user);
 
             // Redirect to the desired page or perform additional actions
-            window.location.href = 'index.html'; // Change 'index.html' to the desired page
+            window.location.href = 'index.html'; 
         })
         .catch((error) => {
             // Handle login error
@@ -49,9 +49,28 @@ loginForm.addEventListener('submit', signInUser);
 window.onload = function() {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
     if (isLoggedIn === 'true') {
-        window.location.href = 'index.html'; // Redirect to dashboard page
+        window.location.href = 'index.html'; 
     }
-    // Other login page initialization code...
+   
 };
+
+
+
+const passwordInput = document.getElementById('password');
+const revealPasswordButton = document.getElementById('revealPassword');
+
+
+revealPasswordButton.addEventListener('click', function(event) {
+    event.preventDefault(); 
+
+ 
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text'; 
+        revealPasswordButton.innerHTML = '<i class="bx bx-hide"></i>'; 
+    } else {
+        passwordInput.type = 'password'; 
+        revealPasswordButton.innerHTML = '<i class="bx bx-show"></i>'; 
+    }
+});
 
 

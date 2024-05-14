@@ -103,4 +103,18 @@ header {
     color: #333;
     font-weight: 600px;
 }
+
+
+#revealPassword {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+ 
+  #revealPassword i {
+    font-size: 1.5em;
+    color: #666666;
+  }
  

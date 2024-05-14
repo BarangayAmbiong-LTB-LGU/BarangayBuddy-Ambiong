@@ -118,40 +118,33 @@ function displayDocuments(docType, tableId) {
     if (snapshot.exists()) {
       const documents = snapshot.val();
 
-      // Reverse the order of document keys
-      const reversedDocEntries = Object.entries(documents).reverse();
+      // Iterate through document entries in their natural order
+      Object.entries(documents).forEach(([outerDocKey, outerDoc]) => {
+        // Iterate through inner documents in their natural order
+        Object.entries(outerDoc).forEach(([innerDocKey, innerDoc]) => {
+          // Append a new row to the table
+          const row = table.insertRow();
+          
+          // Append cells to the row based on the document type
+          if (docType === 'Barangay Clearance') {
+            appendBarangayClearanceCells(row, innerDoc);
+          } else if (docType === 'Business Clearance') {
+            appendBusinessClearanceCells(row, innerDoc);
+          } else if (docType === 'Residency') {
+            appendResidencyCells(row, innerDoc);
+          } else if (docType === 'Indigency') {
+            appendIndigency(row, innerDoc);
+          } else if (docType === 'Others') {
+            appendOthersCells(row, innerDoc);
+          } else {
+            console.error("Unknown document type:", docType);
+            return;
+          }
 
-     // Inside the displayDocuments function
-reversedDocEntries.forEach(([outerDocKey, outerDoc]) => {
-  // Now iterate through inner documents in reversed order
-  Object.entries(outerDoc).reverse().forEach(([innerDocKey, innerDoc]) => {
-    // Append a new row to the table
-    const row = table.insertRow();
-    
-    // Append cells to the row based on the document type
-    if (docType === 'Barangay Clearance') {
-      appendBarangayClearanceCells(row, innerDoc);
-    } else if (docType === 'Business Clearance') {
-      appendBusinessClearanceCells(row, innerDoc);
-    } else if (docType === 'Residency') {
-      appendResidencyCells(row, innerDoc);
-    } else if (docType === 'Indigency') {
-      appendIndigency(row, innerDoc);
-    } else if (docType === 'Others') {
-      appendOthersCells(row, innerDoc);
-    } else {
-      console.error("Unknown document type:", docType);
-      return;
-    }
-
-    // Call the function to create buttons and append them to the row
-    appendButtonsToRow(row, docType, outerDocKey, innerDocKey);
-  });
-});
-
-// Move done rows to the bottom after loading the documents
-moveDoneRowsToFinishedDocuments(table);
-
+          // Call the function to create buttons and append them to the row
+          appendButtonsToRow(row, docType, outerDocKey, innerDocKey);
+        });
+      });
     } else {
       console.log(`No ${docType} data available`);
     }
@@ -159,6 +152,7 @@ moveDoneRowsToFinishedDocuments(table);
     console.error(`Error fetching ${docType} data:`, error.message);
   });
 }
+
 
 
 
@@ -291,15 +285,50 @@ function appendButtonsToRow(row, docType, outerDocKey, innerDocKey, innerDoc) {
   const rejectButton = createStatusButton(docType, outerDocKey, innerDocKey, 'Pending');
   const finishedButton = createStatusButton(docType, outerDocKey, innerDocKey, 'For Claiming');
   const doneButton = createStatusButton(docType, outerDocKey, innerDocKey, 'Claimed');
+  const deleteButton = createDeleteButton(docType, outerDocKey, innerDocKey); 
+
 
   // Append buttons to actions bar
   actionsBar.appendChild(acceptButton);
   actionsBar.appendChild(rejectButton);
   actionsBar.appendChild(finishedButton);
   actionsBar.appendChild(doneButton);
+  actionsBar.appendChild(deleteButton); 
 
   // Append actions bar to action cell
   actionCell.appendChild(actionsBar);
+}
+
+// Function to create delete button
+function createDeleteButton(docType, outerDocKey, innerDocKey) {
+  const button = document.createElement('button');
+  button.textContent = 'Delete';
+  button.classList.add('publish-btn');
+
+  button.addEventListener('click', () => {
+    if (confirm('Are you sure you want to delete this document?')) {
+      deleteDocument(docType, outerDocKey, innerDocKey);
+    }
+  });
+
+  return button;
+}
+
+// Function to delete a document from Firebase
+function deleteDocument(docType, outerDocKey, innerDocKey) {
+  const documentRef = ref(database, `RequestedDocuments/${docType}/${outerDocKey}/${innerDocKey}`);
+  remove(documentRef)
+    .then(() => {
+      console.log(`Document ${innerDocKey} deleted from ${docType}`);
+      // Optionally, remove the row from the table after deletion
+      const row = document.getElementById(`${outerDocKey}_${innerDocKey}`);
+      if (row) {
+        row.remove();
+      }
+    })
+    .catch((error) => {
+      console.error('Error deleting document:', error.message);
+    });
 }
 
 
